@@ -10,8 +10,8 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 
 ## 📌 Kaldığımız yer (03.10.2026)
 - **Bitti:** Faz 0–4. Derleme, lint, tip kontrolü ve `npm run check:sql` temiz.
-- **Supabase bağlandı** (`.env.local` hazır). `0001`–`0003` çalıştırıldı, Hasan yönetici.
-  - ⚠️ **`0004_icerik.sql` henüz Supabase'de çalıştırılmadı.** Çalıştırınca `npm run check:live` hepsini yeşil göstermeli.
+- **Supabase bağlandı** (`.env.local` hazır). `0001`–`0004` çalıştırıldı, Hasan yönetici.
+  - `0004_icerik.sql` de çalıştırıldı; `npm run check:live` hepsi yeşil (03.10.2026).
   - Nehir'in hesabı açılıp yönetici yapılacak (aynı SQL tekrar çalıştırılır).
   - "Allow new users to sign up" kapatıldı mı, kontrol edilecek.
 - **Sıradaki iş:**
