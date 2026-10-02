@@ -6,6 +6,7 @@ import type { Stat } from "@/lib/settings";
 import { ImageField } from "./ImageField";
 import { ImagesField } from "./ImagesField";
 import { LocationField } from "./LocationField";
+import { RichTextField } from "./RichTextField";
 import { StatsField } from "./StatsField";
 
 type Props = {
@@ -79,6 +80,22 @@ function Control({ id, field, value, onChange, folder }: Props & { id: string })
           className="field-input"
           value={text}
           onChange={(event) => onChange(event.target.value === "" ? null : event.target.valueAsNumber)}
+        />
+      );
+    case "richtext":
+      return <RichTextField id={id} value={value} onChange={onChange} folder={folder} />;
+    case "slug":
+      return (
+        <input
+          id={id}
+          type="text"
+          className="field-input font-mono text-sm"
+          value={text}
+          placeholder={field.placeholder ?? "Boş bırakılırsa başlıktan oluşturulur"}
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck={false}
+          onChange={(event) => onChange(event.target.value)}
         />
       );
     case "images":

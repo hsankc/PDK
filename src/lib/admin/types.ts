@@ -9,6 +9,8 @@ export type FieldType =
   | "location"
   | "select"
   | "relation"
+  | "richtext"
+  | "slug"
   | "boolean"
   | "url"
   | "email"
@@ -40,6 +42,10 @@ export interface Field {
   max?: number;
   /** relation: başka tablodan seçim (örn. veteriner); seçenekler sayfa açılırken çekilir */
   relation?: { table: string; labelField: string };
+  /** slug: boş bırakılırsa bu alandan (örn. başlık) otomatik üretilir */
+  slugFrom?: string;
+  /** Boş bırakılırsa veritabanına hiç gönderilmez; sütunun varsayılanı (örn. now()) kullanılır */
+  keepDefaultWhenEmpty?: boolean;
 }
 
 /** boolean: yayında değilse "Gizli" gösterir · flag: doğruysa sütun adını rozet olarak gösterir */
@@ -65,7 +71,12 @@ export type ResourceIcon =
   | "wallet"
   | "list-checks"
   | "folder-kanban"
-  | "scissors";
+  | "scissors"
+  | "pen"
+  | "book-open"
+  | "search"
+  | "megaphone"
+  | "hand-helping";
 
 export interface ResourceConfig {
   /** Panel adresi: /yonetim/<slug> */
@@ -95,6 +106,19 @@ export interface ResourceConfig {
   };
   /** Sitede görüneceği adres (panelden "sitede gör" bağlantısı için) */
   publicPath?: string;
+  /** Aynı tabloyu paylaşan bölümler için sabit sütun değerleri (örn. { kind: "rehber" }).
+   *  Liste bu değerlere göre süzülür, yeni kayıtlara otomatik yazılır. */
+  fixed?: Record<string, string>;
+  /** inbox: kaydı başka bir bölümde taslak içeriğe dönüştüren düğme */
+  convert?: {
+    /** Hedef bölümün slug'ı */
+    to: string;
+    label: string;
+    /** hedef sütun → kaynak sütun (dizi verilirse dolu olanlar " · " ile birleştirilir) */
+    map: Record<string, string | string[]>;
+    /** Dönüştürülünce kaynağın alacağı durum */
+    setStatus: string;
+  };
 }
 
 export interface SettingsGroup {

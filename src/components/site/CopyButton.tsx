@@ -7,7 +7,7 @@ import { useState } from "react";
  * Panoya kopyalar. Yeni pano API'si engelliyse (ör. Instagram'ın uygulama içi tarayıcısı)
  * gizli bir metin kutusu üzerinden eski yöntemi dener.
  */
-async function copyText(text: string) {
+export async function copyText(text: string) {
   try {
     await navigator.clipboard.writeText(text);
     return true;

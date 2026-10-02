@@ -127,6 +127,34 @@ export type NeuterRecord = {
   vets: { name: string } | null;
 };
 
+export type Post = {
+  id: string;
+  kind: "yazi" | "rehber";
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  content: unknown;
+  cover_url: string | null;
+  author_name: string | null;
+  category: string | null;
+  published_at: string;
+};
+
+export type LostFound = {
+  id: string;
+  kind: "kayip" | "bulundu";
+  species: string;
+  animal_name: string | null;
+  description: string | null;
+  area: string | null;
+  seen_on: string | null;
+  photo_url: string | null;
+  photos: string[];
+  contact: string | null;
+  status: "aktif" | "kavustu";
+  created_at: string;
+};
+
 function logError(where: string, error: { message: string } | null) {
   if (error) console.error(`${where} okunamadı:`, error.message);
 }
@@ -361,6 +389,51 @@ export async function getNeuterOverview(today: string) {
     cats: cats.count ?? 0,
     dogs: dogs.count ?? 0,
   };
+}
+
+// --------------------------------------------------------------- Faz 4
+
+const POST_LIST_COLUMNS = "id, kind, slug, title, excerpt, content, cover_url, author_name, category, published_at";
+
+/** Yazılar en yeniden eskiye, rehberler panelde verilen sıraya göre. */
+export async function getPosts(kind: Post["kind"], limit = 100): Promise<Post[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  let query = supabase.from("posts").select(POST_LIST_COLUMNS).eq("kind", kind).eq("is_published", true);
+  if (kind === "rehber") query = query.order("sort_order", { ascending: true });
+  const { data, error } = await query.order("published_at", { ascending: false }).limit(limit);
+  logError(kind === "yazi" ? "Yazılar" : "Rehberler", error);
+  return (data ?? []) as Post[];
+}
+
+export async function getPost(kind: Post["kind"], slug: string): Promise<Post | null> {
+  if (!/^[a-z0-9-]{1,120}$/.test(slug)) return null;
+  const supabase = await getPublicClient();
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from("posts")
+    .select(POST_LIST_COLUMNS)
+    .eq("kind", kind)
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .maybeSingle();
+  logError("Yazı", error);
+  return data as Post | null;
+}
+
+export async function getLostFound(): Promise<LostFound[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("lost_found")
+    .select(
+      "id, kind, species, animal_name, description, area, seen_on, photo_url, photos, contact, status, created_at",
+    )
+    .eq("is_published", true)
+    .order("created_at", { ascending: false })
+    .limit(200);
+  logError("Kayıp & bulundu", error);
+  return (data ?? []) as LostFound[];
 }
 
 // ---------------------------------------------------------------------------

@@ -1,10 +1,11 @@
 "use client";
 
-import { Mail, Phone } from "lucide-react";
+import { Loader2, Mail, Megaphone, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { getResource, optionLabel } from "@/lib/admin/resources";
-import { formatDate } from "@/lib/format";
+import { formatDate, formatDay } from "@/lib/format";
+import { safeHref } from "@/lib/url";
 import { createClient } from "@/lib/supabase/client";
 import { DeleteButton } from "./DeleteButton";
 import { SaveBar, type SaveStatus } from "./SaveBar";
@@ -41,6 +42,42 @@ export function InboxDetail({ slug, row }: { slug: string; row: Row }) {
         router.refresh();
       });
   }, [id, resource.table, row, router, statusConfig]);
+
+  // Bildirimi başka bölümde (örn. Kayıp & Bulundu) gizli taslak ilana çevir
+  const [converting, setConverting] = useState(false);
+  const onConvert = async () => {
+    const convert = resource.convert;
+    const target = convert && getResource(convert.to);
+    if (!convert || !target) return;
+    setConverting(true);
+    const draft = Object.fromEntries(
+      Object.entries(convert.map).map(([to, from]) => {
+        if (!Array.isArray(from)) return [to, row[from] ?? null];
+        const joined = from
+          .map((column) => String(row[column] ?? "").trim())
+          .filter(Boolean)
+          .join(" · ");
+        return [to, joined || null];
+      }),
+    );
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from(target.table)
+      .insert({ ...draft, ...target.fixed, is_published: false })
+      .select("id")
+      .single();
+    if (error || !data) {
+      setConverting(false);
+      setSaveStatus({ kind: "error", message: `İlan oluşturulamadı: ${error?.message ?? "bilinmeyen hata"}` });
+      return;
+    }
+    await supabase
+      .from(resource.table)
+      .update({ [statusConfig.field]: convert.setStatus })
+      .eq("id", id);
+    router.push(`/yonetim/${target.slug}/${data.id}`);
+    router.refresh();
+  };
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -84,6 +121,17 @@ export function InboxDetail({ slug, row }: { slug: string; row: Row }) {
                     >
                       <Phone className="size-4" aria-hidden="true" /> {String(value)}
                     </a>
+                  ) : field.type === "url" && safeHref(String(value)) ? (
+                    <a
+                      href={safeHref(String(value))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-brand break-all underline"
+                    >
+                      {String(value)}
+                    </a>
+                  ) : field.type === "date" ? (
+                    formatDay(String(value))
                   ) : field.options ? (
                     optionLabel(field.options, value)
                   ) : (
@@ -95,6 +143,26 @@ export function InboxDetail({ slug, row }: { slug: string; row: Row }) {
           })}
         </dl>
       </div>
+
+      {resource.convert && (
+        <div className="card border-brand mt-6 flex flex-wrap items-center justify-between gap-4 p-5 sm:p-7">
+          <div>
+            <p className="font-display text-lg font-extrabold">{resource.convert.label}</p>
+            <p className="text-ink-soft text-sm">
+              Bilgiler gizli bir taslak ilana kopyalanır. Fotoğraf ve iletişim bilgisini kontrol edip &quot;Sitede
+              göster&quot;i açınca yayınlanır.
+            </p>
+          </div>
+          <button type="button" onClick={onConvert} disabled={converting} className="btn btn-red btn-sm">
+            {converting ? (
+              <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+            ) : (
+              <Megaphone className="size-4" aria-hidden="true" />
+            )}
+            İlan taslağı oluştur
+          </button>
+        </div>
+      )}
 
       <div className="card mt-6 grid gap-5 p-5 sm:grid-cols-[14rem_1fr] sm:p-7">
         <div>

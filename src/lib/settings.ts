@@ -62,6 +62,12 @@ export interface SiteSettings {
   neuter_intro: string;
   neuter_count_offset: number;
 
+  posts_intro: string;
+  guides_intro: string;
+  lost_found_intro: string;
+  volunteer_intro: string;
+  volunteer_open: boolean;
+
   map_center: LatLng | null;
   map_zoom: number;
 
@@ -123,6 +129,12 @@ export const defaultSettings: SiteSettings = {
   projects_intro: "",
   neuter_intro: "",
   neuter_count_offset: 0,
+
+  posts_intro: "",
+  guides_intro: "",
+  lost_found_intro: "",
+  volunteer_intro: "",
+  volunteer_open: true,
 
   map_center: null,
   map_zoom: 15,

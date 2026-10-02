@@ -161,6 +161,17 @@ export const settingsGroups: SettingsGroup[] = [
     ],
   },
   {
+    id: "icerik",
+    title: "Yazılar, rehberler, kayıp/bulundu, gönüllü",
+    fields: [
+      { name: "posts_intro", label: "Yazı Köşesi sayfası açıklaması", type: "textarea", rows: 2 },
+      { name: "guides_intro", label: "Rehberler sayfası açıklaması", type: "textarea", rows: 2 },
+      { name: "lost_found_intro", label: "Kayıp & Bulundu sayfası açıklaması", type: "textarea", rows: 2 },
+      { name: "volunteer_intro", label: "Gönüllü Ol sayfası açıklaması", type: "textarea", rows: 3 },
+      { name: "volunteer_open", label: "Gönüllü ve geçici yuva başvuruları açık", type: "boolean" },
+    ],
+  },
+  {
     id: "harita",
     title: "Harita",
     description: "Haritaların ilk açıldığı yer. Kampüsü ya da mahallenizi seçin.",

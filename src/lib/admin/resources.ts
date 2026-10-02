@@ -3,13 +3,18 @@ import {
   adoptionStatusOptions,
   ageGroupOptions,
   housingOptions,
+  lostFoundKindOptions,
+  lostFoundReportStatuses,
+  lostFoundStatusOptions,
   neuterStatusOptions,
   projectStatusOptions,
   sexOptions,
   shelterKindOptions,
   speciesOptions,
+  volunteerKindOptions,
+  volunteerStatuses,
 } from "@/lib/options";
-import type { Option, ResourceConfig } from "./types";
+import type { Field, Option, ResourceConfig } from "./types";
 
 /*
  * Panelde yönetilen her bölüm burada tanımlanır.
@@ -50,6 +55,45 @@ const sortOrderField = {
 };
 const publishedField = { name: "is_published", label: "Sitede göster", type: "boolean" as const, defaultValue: true };
 const publishedColumn = { name: "is_published", label: "Yayında", type: "boolean" as const };
+
+/** Yazı köşesi ve rehberler aynı tabloyu (posts) kullanır. */
+function postFields(kind: "yazi" | "rehber"): Field[] {
+  const base = kind === "yazi" ? "/yazilar/" : "/rehberler/";
+  return [
+    { name: "title", label: "Başlık", type: "text", required: true },
+    {
+      name: "slug",
+      label: "Web adresi",
+      type: "slug",
+      slugFrom: "title",
+      help: `Sitedeki adresi: ${base}… Boş bırakırsan başlıktan oluşur (Türkçe harfler dönüştürülür).`,
+    },
+    {
+      name: "excerpt",
+      label: "Kısa özet",
+      type: "textarea",
+      rows: 2,
+      help: "Kartlarda ve paylaşımlarda görünür. Boş bırakılırsa yazının başından alınır.",
+    },
+    { name: "cover_url", label: "Kapak görseli", type: "image" },
+    { name: "content", label: kind === "yazi" ? "Yazı" : "Rehber içeriği", type: "richtext", required: true },
+    ...(kind === "yazi"
+      ? ([
+          { name: "category", label: "Kategori", type: "text", half: true, placeholder: "Örn: Etkinlik, Duyuru, Anı" },
+          { name: "author_name", label: "Yazar", type: "text", half: true },
+          {
+            name: "published_at",
+            label: "Yayın tarihi",
+            type: "datetime",
+            half: true,
+            keepDefaultWhenEmpty: true,
+            help: "Boş bırakılırsa kaydettiğin an.",
+          },
+        ] satisfies Field[])
+      : ([{ ...sortOrderField, help: "Rehberler bu sıraya göre listelenir." }] satisfies Field[])),
+    publishedField,
+  ];
+}
 
 export const resources: ResourceConfig[] = [
   // ------------------------------------------------------------------ Kulüp
@@ -122,6 +166,29 @@ export const resources: ResourceConfig[] = [
       { name: "description", label: "Açıklama", type: "textarea", rows: 6 },
       publishedField,
     ],
+  },
+
+  {
+    slug: "yazilar",
+    table: "posts",
+    fixed: { kind: "yazi" },
+    label: "Yazı Köşesi",
+    singular: "Yazı",
+    description: "Kulübün blogu: haberler, anılar, duyurular.",
+    icon: "pen",
+    group: "Kulüp",
+    kind: "content",
+    orderBy: [{ column: "published_at", ascending: false }],
+    titleField: "title",
+    publicPath: "/yazilar",
+    columns: [
+      { name: "cover_url", label: "", type: "image" },
+      { name: "title", label: "Başlık" },
+      { name: "category", label: "Kategori" },
+      { name: "published_at", label: "Tarih", type: "datetime" },
+      publishedColumn,
+    ],
+    fields: postFields("yazi"),
   },
 
   // --------------------------------------------------------- Patili Dostlar
@@ -343,6 +410,104 @@ export const resources: ResourceConfig[] = [
       { name: "photo_url", label: "Fotoğraf", type: "image" },
       publishedField,
     ],
+  },
+
+  {
+    slug: "kayip-bulundu",
+    table: "lost_found",
+    label: "Kayıp & Bulundu",
+    singular: "İlan",
+    description: "Sitedeki kayıp/bulundu ilanları. Ziyaretçilerin bildirimleri Gelen kutusuna düşer.",
+    icon: "search",
+    group: "Patili Dostlar",
+    kind: "content",
+    orderBy: [
+      { column: "status", ascending: true },
+      { column: "created_at", ascending: false },
+    ],
+    titleField: "animal_name",
+    publicPath: "/kayip-bulundu",
+    columns: [
+      { name: "photo_url", label: "", type: "image" },
+      { name: "animal_name", label: "Adı" },
+      { name: "kind", label: "Tür" },
+      { name: "status", label: "Durum" },
+      { name: "area", label: "Yer" },
+      publishedColumn,
+    ],
+    fields: [
+      {
+        name: "kind",
+        label: "İlan türü",
+        type: "select",
+        options: lostFoundKindOptions,
+        required: true,
+        defaultValue: "kayip",
+        half: true,
+      },
+      {
+        name: "status",
+        label: "Durum",
+        type: "select",
+        options: lostFoundStatusOptions,
+        required: true,
+        defaultValue: "aktif",
+        half: true,
+        help: "Sahibine kavuşunca “Kavuştu” yap.",
+      },
+      {
+        name: "species",
+        label: "Hayvan",
+        type: "select",
+        options: speciesOptions,
+        required: true,
+        defaultValue: "kedi",
+        half: true,
+      },
+      { name: "animal_name", label: "Adı", type: "text", half: true, placeholder: "Bilinmiyorsa boş bırak" },
+      { name: "photo_url", label: "Fotoğraf", type: "image" },
+      { name: "photos", label: "Diğer fotoğraflar", type: "images" },
+      {
+        name: "description",
+        label: "Açıklama",
+        type: "textarea",
+        rows: 4,
+        placeholder: "Rengi, tasması, belirgin özellikleri…",
+      },
+      { name: "area", label: "Görüldüğü / kaybolduğu yer", type: "text", half: true },
+      { name: "seen_on", label: "Tarih", type: "date", half: true },
+      {
+        name: "contact",
+        label: "İletişim (ilanda görünür)",
+        type: "text",
+        help: "Sahibinin izniyle telefon yaz ya da kulübün numarasını kullan.",
+      },
+      publishedField,
+    ],
+  },
+  {
+    slug: "rehberler",
+    table: "posts",
+    fixed: { kind: "rehber" },
+    label: "Rehberler",
+    singular: "Rehber",
+    description: "“Nasıl yardım ederim?” yazıları: yaralı hayvan, yavru, kış hazırlığı…",
+    icon: "book-open",
+    group: "Patili Dostlar",
+    kind: "content",
+    orderBy: [
+      { column: "sort_order", ascending: true },
+      { column: "published_at", ascending: false },
+    ],
+    titleField: "title",
+    publicPath: "/rehberler",
+    columns: [
+      { name: "cover_url", label: "", type: "image" },
+      { name: "title", label: "Başlık" },
+      { name: "sort_order", label: "Sıra" },
+      publishedColumn,
+    ],
+    fields: postFields("rehber"),
   },
 
   // --------------------------------------------------------- Çalışmalarımız
@@ -623,6 +788,84 @@ export const resources: ResourceConfig[] = [
       { name: "message", label: "Mesajı", type: "textarea" },
     ],
     status: { field: "status", options: adoptionApplicationStatuses, newValue: "yeni" },
+  },
+  {
+    slug: "kayip-bildirimleri",
+    table: "lost_found_reports",
+    label: "Kayıp/Bulundu Bildirimleri",
+    singular: "Bildirim",
+    description: "Ziyaretçilerin gönderdiği kayıp/bulundu bildirimleri. Uygun olanı tek tıkla ilana çevir.",
+    icon: "megaphone",
+    group: "Gelen kutusu",
+    kind: "inbox",
+    orderBy: [{ column: "created_at", ascending: false }],
+    titleField: "description",
+    columns: [
+      { name: "description", label: "Açıklama" },
+      { name: "kind", label: "Tür" },
+      { name: "area", label: "Yer" },
+      { name: "created_at", label: "Tarih", type: "datetime" },
+      { name: "status", label: "Durum", type: "status" },
+    ],
+    fields: [
+      { name: "kind", label: "Tür", type: "select", options: lostFoundKindOptions },
+      { name: "species", label: "Hayvan", type: "select", options: speciesOptions },
+      { name: "animal_name", label: "Adı", type: "text" },
+      { name: "area", label: "Yer", type: "text" },
+      { name: "seen_on", label: "Tarih", type: "date" },
+      { name: "photo_link", label: "Fotoğraf bağlantısı", type: "url" },
+      { name: "contact_name", label: "Bildiren", type: "text" },
+      { name: "contact_phone", label: "Telefon", type: "tel" },
+      { name: "contact_email", label: "E-posta", type: "email" },
+      { name: "description", label: "Açıklama", type: "textarea" },
+    ],
+    status: { field: "status", options: lostFoundReportStatuses, newValue: "yeni" },
+    convert: {
+      to: "kayip-bulundu",
+      label: "Sitede ilan olarak yayınla",
+      map: {
+        kind: "kind",
+        species: "species",
+        animal_name: "animal_name",
+        description: "description",
+        area: "area",
+        seen_on: "seen_on",
+        contact: ["contact_name", "contact_phone"],
+      },
+      setStatus: "yayinlandi",
+    },
+  },
+  {
+    slug: "gonullu-basvurulari",
+    table: "volunteer_applications",
+    label: "Gönüllü & Geçici Yuva",
+    singular: "Gönüllü başvurusu",
+    description: "Gönüllü ol / geçici yuva ol formundan gelenler.",
+    icon: "hand-helping",
+    group: "Gelen kutusu",
+    kind: "inbox",
+    orderBy: [{ column: "created_at", ascending: false }],
+    titleField: "full_name",
+    columns: [
+      { name: "full_name", label: "Ad Soyad" },
+      { name: "kind", label: "Tür" },
+      { name: "created_at", label: "Tarih", type: "datetime" },
+      { name: "status", label: "Durum", type: "status" },
+    ],
+    fields: [
+      { name: "kind", label: "Başvuru türü", type: "select", options: volunteerKindOptions },
+      { name: "full_name", label: "Ad Soyad", type: "text" },
+      { name: "phone", label: "Telefon", type: "tel" },
+      { name: "email", label: "E-posta", type: "email" },
+      { name: "district", label: "Semt / yurt", type: "text" },
+      { name: "housing", label: "Yaşadığı yer", type: "select", options: housingOptions },
+      { name: "can_host", label: "Bakabileceği hayvan", type: "text" },
+      { name: "duration", label: "Ne kadar süre", type: "text" },
+      { name: "availability", label: "Uygun zamanları / ilgi alanları", type: "textarea" },
+      { name: "other_pets", label: "Evdeki diğer hayvanlar", type: "textarea" },
+      { name: "message", label: "Mesajı", type: "textarea" },
+    ],
+    status: { field: "status", options: volunteerStatuses, newValue: "yeni" },
   },
   {
     slug: "oneriler",

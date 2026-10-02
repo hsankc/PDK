@@ -9,16 +9,19 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 ---
 
 ## 📌 Kaldığımız yer (03.10.2026)
-- **Bitti:** Faz 0, 1, 2 ve 3. Derleme, lint, tip kontrolü ve `npm run check:sql` temiz.
-- **Sıradaki iş:** Faz 4: yazı köşesi (blog), rehberler (tutorial), kayıp/buldum, gönüllü/geçici yuva başvurusu.
-  - Yazılar için zengin metin editörü seçilecek.
-  - Yeni SQL dosyası `0004_icerik.sql`; güvenlik testleri `check-sql.mjs`'e eklenecek.
+- **Bitti:** Faz 0–4. Derleme, lint, tip kontrolü ve `npm run check:sql` temiz.
+- **Supabase bağlandı** (`.env.local` hazır). `0001`–`0003` çalıştırıldı, Hasan yönetici.
+  - ⚠️ **`0004_icerik.sql` henüz Supabase'de çalıştırılmadı.** Çalıştırınca `npm run check:live` hepsini yeşil göstermeli.
+  - Nehir'in hesabı açılıp yönetici yapılacak (aynı SQL tekrar çalıştırılır).
+  - "Allow new users to sign up" kapatıldı mı, kontrol edilecek.
+- **Sıradaki iş:**
+  - Panelin uçtan uca testi: ayar kaydetme, logo yükleme, ekle/sil, formlar (sonraya bırakıldı).
+  - Faz 5: mini oyunlar, gizli pati avı, karanlık mod, SEO, yayına alma.
 - **Bekleyenler:**
-  - Supabase en sona bırakıldı. Bağlanınca panelde kaydetme, resim yükleme ve formlar uçtan uca test edilecek.
   - Nehir'e sorulacak:
     - Besleme noktalarının tam konumu herkese açık mı olsun?
     - "Kısırlaştırma takevi" = takvim + takip diye yapıldı; doğru mu?
-  - Kod GitHub'da: https://github.com/hsankc/PDK (`main` dalı, Faz 0–3 gönderildi).
+  - Kod GitHub'da: https://github.com/hsankc/PDK (`main`).
 
 ---
 
@@ -59,11 +62,14 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] Panel: veterinerden seçme (tablolar arası bağlantı), para ve tarih sütunları
 - [x] Menüde "Çalışmalarımız" ve öne çıkan "Destek Ol"; ana sayfada destek çağrısı
 
-## Faz 4 — İçerik ve Rehberler ⏳
-- [ ] Yazı köşesi (blog, zengin metin editörü, kategoriler)
-- [ ] Rehberler / tutorial: yaralı hayvan bulunca, yavru bulunca, besleme, kış hazırlığı…
-- [ ] *(öneri)* Kayıp / buldum ilanları
-- [ ] *(öneri)* Gönüllü ve geçici yuva başvurusu
+## Faz 4 — İçerik ve Rehberler ✅
+- [x] Yazı köşesi: Word benzeri editör (başlık, kalın, liste, alıntı, bağlantı, resim), kategori, okuma süresi, paylaş düğmeleri
+- [x] Rehberler ("Nasıl Yardım Ederim?"): numaralı rehber listesi, aynı editör
+- [x] Web adresleri başlıktan otomatik (Türkçe harfler dönüştürülür)
+- [x] Kayıp & Bulundu: ilan panosu (kayıplar / sahibi aranıyor / kavuşanlar) + ziyaretçi bildirim formu
+- [x] Panelde bildirimi tek tıkla taslak ilana çevirme
+- [x] Gönüllü ol & geçici yuva başvuru formu
+- [x] Güvenlik: yazılar HTML değil JSON olarak saklanır; zararlı bağlantı/resim sitede çizilmez
 
 ## Faz 5 — Eğlence ve Cila ⏳
 - [ ] Mini oyunlar: Mama Yakala, Hafıza Kartları (+ skor tablosu)
@@ -75,12 +81,10 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 
 ---
 
-## Supabase bağlantısı (en sona bırakıldı)
-Supabase en son bağlanacak. O zamana kadar:
-- Site boş içerikle çalışır, panel "Supabase bağlantısı gerekli" ekranını gösterir.
-- Her fazın SQL dosyası ve güvenlik kuralları `npm run check:sql` ile bilgisayarda (PGlite) test edilir.
-- Bağlanınca yapılacak: `supabase/migrations/` altındaki dosyaları sırayla çalıştır → yönetici ekle → `.env.local` →
-  panelde her bölümü uçtan uca dene (kaydet, resim yükle, formlar, başvurular).
+## Supabase
+- Her yeni fazın SQL dosyası önce `npm run check:sql` ile bilgisayarda (PGlite) test edilir,
+  sonra Supabase SQL Editor'de çalıştırılır.
+- Canlı veritabanının izinleri `npm run check:live` ile ziyaretçi gözüyle kontrol edilir (veri yazmaz).
 
 ## Kurulum
 Ayrıntılar: [README.md](README.md)

@@ -4,8 +4,10 @@ import {
   adoptionSchema,
   formDataToObject,
   isBot,
+  lostFoundReportSchema,
   membershipSchema,
   suggestionSchema,
+  volunteerSchema,
   zodErrors,
   type FormState,
 } from "@/lib/forms";
@@ -125,6 +127,78 @@ export async function submitAdoption(_prev: FormState, formData: FormData): Prom
   const { error } = await supabase.from("adoption_applications").insert({ ...parsed.data, animal_name: animal.name });
   if (error) {
     console.error("Sahiplenme başvurusu kaydedilemedi:", error.message);
+    return SAVE_FAILED;
+  }
+  return { status: "success" };
+}
+
+export async function submitLostFoundReport(_prev: FormState, formData: FormData): Promise<FormState> {
+  if (isBot(formData)) return { status: "success" };
+  if (formData.get("consent") !== "on") {
+    return { status: "error", message: "Onay kutusunu işaretlemelisin.", errors: { consent: "Onay gerekli." } };
+  }
+
+  const parsed = lostFoundReportSchema.safeParse(
+    formDataToObject(formData, [
+      "kind",
+      "species",
+      "animal_name",
+      "description",
+      "area",
+      "seen_on",
+      "photo_link",
+      "contact_name",
+      "contact_phone",
+      "contact_email",
+    ]),
+  );
+  if (!parsed.success) {
+    return { status: "error", message: "Lütfen işaretli alanları kontrol et.", errors: zodErrors(parsed.error) };
+  }
+
+  const supabase = await getPublicClient();
+  if (!supabase) return NOT_CONFIGURED;
+  const { error } = await supabase.from("lost_found_reports").insert(parsed.data);
+  if (error) {
+    console.error("Kayıp/bulundu bildirimi kaydedilemedi:", error.message);
+    return SAVE_FAILED;
+  }
+  return { status: "success" };
+}
+
+export async function submitVolunteer(_prev: FormState, formData: FormData): Promise<FormState> {
+  if (isBot(formData)) return { status: "success" };
+
+  const settings = await getSettings();
+  if (!settings.volunteer_open) return { status: "error", message: "Başvurular şu an kapalı." };
+  if (formData.get("consent") !== "on") {
+    return { status: "error", message: "Onay kutusunu işaretlemelisin.", errors: { consent: "Onay gerekli." } };
+  }
+
+  const parsed = volunteerSchema.safeParse(
+    formDataToObject(formData, [
+      "kind",
+      "full_name",
+      "phone",
+      "email",
+      "district",
+      "availability",
+      "housing",
+      "other_pets",
+      "can_host",
+      "duration",
+      "message",
+    ]),
+  );
+  if (!parsed.success) {
+    return { status: "error", message: "Lütfen işaretli alanları kontrol et.", errors: zodErrors(parsed.error) };
+  }
+
+  const supabase = await getPublicClient();
+  if (!supabase) return NOT_CONFIGURED;
+  const { error } = await supabase.from("volunteer_applications").insert(parsed.data);
+  if (error) {
+    console.error("Gönüllü başvurusu kaydedilemedi:", error.message);
     return SAVE_FAILED;
   }
   return { status: "success" };

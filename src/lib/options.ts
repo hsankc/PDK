@@ -60,6 +60,34 @@ export const neuterStatusOptions: Option[] = [
   { value: "iptal", label: "İptal" },
 ];
 
+export const lostFoundKindOptions: Option[] = [
+  { value: "kayip", label: "Kayıp" },
+  { value: "bulundu", label: "Bulundu" },
+];
+
+export const lostFoundStatusOptions: Option[] = [
+  { value: "aktif", label: "Aranıyor / sahibi aranıyor" },
+  { value: "kavustu", label: "Kavuştu" },
+];
+
+export const lostFoundReportStatuses: Option[] = [
+  { value: "yeni", label: "Yeni" },
+  { value: "yayinlandi", label: "İlana dönüştürüldü" },
+  { value: "kapandi", label: "Kapandı" },
+];
+
+export const volunteerKindOptions: Option[] = [
+  { value: "gonullu", label: "Gönüllü" },
+  { value: "gecici_yuva", label: "Geçici yuva" },
+];
+
+export const volunteerStatuses: Option[] = [
+  { value: "yeni", label: "Yeni" },
+  { value: "inceleniyor", label: "İnceleniyor" },
+  { value: "kabul", label: "Kabul edildi" },
+  { value: "red", label: "Reddedildi" },
+];
+
 export function labelOf(options: Option[], value: unknown) {
   return options.find((option) => option.value === value)?.label ?? "";
 }

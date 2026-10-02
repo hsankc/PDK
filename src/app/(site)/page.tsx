@@ -5,6 +5,7 @@ import { HeroPets } from "@/components/pets/HeroPets";
 import { PawIcon } from "@/components/pets/PawIcon";
 import { AdoptionCard } from "@/components/site/adoption/AdoptionCard";
 import { Countdown } from "@/components/site/Countdown";
+import { PostCard } from "@/components/site/PostCard";
 import { ProgressBar } from "@/components/site/ProgressBar";
 import { Reveal } from "@/components/site/Reveal";
 import { StatCounter } from "@/components/site/StatCounter";
@@ -14,6 +15,7 @@ import {
   getDebts,
   getNeeds,
   getNextEvent,
+  getPosts,
   getTeamMembers,
   summarizeDebts,
   type ClubEvent,
@@ -23,13 +25,14 @@ import { dateParts, formatDate, formatMoney } from "@/lib/format";
 import { getSettings, paragraphs, type SiteSettings } from "@/lib/settings";
 
 export default async function HomePage() {
-  const [settings, nextEvent, team, adoptions, debts, needs] = await Promise.all([
+  const [settings, nextEvent, team, adoptions, debts, needs, posts] = await Promise.all([
     getSettings(),
     getNextEvent(),
     getTeamMembers(),
     getAdoptions(),
     getDebts(),
     getNeeds(),
+    getPosts("yazi", 3),
   ]);
   const aboutFirstParagraph = paragraphs(settings.about_text)[0];
   const waiting = adoptions.filter((animal) => animal.status === "sahiplendirilebilir");
@@ -109,6 +112,24 @@ export default async function HomePage() {
                 </Reveal>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {posts.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          <Reveal className="mb-10 flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-display text-4xl font-extrabold sm:text-5xl">Yazı Köşesi&apos;nden</h2>
+            <Link href="/yazilar" className="btn btn-white btn-sm">
+              Tüm yazılar <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </Reveal>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post, index) => (
+              <Reveal key={post.id} delay={index * 0.08}>
+                <PostCard post={post} />
+              </Reveal>
+            ))}
           </div>
         </section>
       )}

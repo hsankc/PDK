@@ -22,6 +22,7 @@ export default async function ResourceListPage({ params, searchParams }: PagePro
 
   let query = supabase.from(resource.table).select(resource.listSelect ?? "*");
   if (statusFilter) query = query.eq(resource.status!.field, statusFilter);
+  for (const [column, value] of Object.entries(resource.fixed ?? {})) query = query.eq(column, value);
   for (const order of resource.orderBy) query = query.order(order.column, { ascending: order.ascending });
   const { data, error } = await query.limit(500);
   const rows = (data ?? []) as unknown as Row[];

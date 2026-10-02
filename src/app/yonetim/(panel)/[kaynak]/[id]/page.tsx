@@ -18,7 +18,9 @@ export default async function ResourceItemPage({ params }: PageProps<"/yonetim/[
 
   let row: Record<string, unknown> | null = null;
   if (!isNew) {
-    const { data } = await supabase.from(resource.table).select("*").eq("id", id).maybeSingle();
+    let query = supabase.from(resource.table).select("*").eq("id", id);
+    for (const [column, value] of Object.entries(resource.fixed ?? {})) query = query.eq(column, value);
+    const { data } = await query.maybeSingle();
     if (!data) notFound();
     row = data;
   }

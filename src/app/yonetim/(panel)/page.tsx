@@ -30,6 +30,7 @@ export default async function DashboardPage() {
     waitingAnimals,
     vets,
     shelters,
+    posts,
   ] = await Promise.all([
     supabase.from("site_settings").select("data").eq("id", 1).maybeSingle(),
     supabase.from("team_members").select("id", head),
@@ -41,6 +42,7 @@ export default async function DashboardPage() {
     supabase.from("adoptions").select("id", head).eq("status", "sahiplendirilebilir"),
     supabase.from("vets").select("id", head),
     supabase.from("shelter_locations").select("id", head),
+    supabase.from("posts").select("id", head),
   ]);
   const settings = mergeSettings(settingsResult.data?.data);
 
@@ -95,6 +97,7 @@ export default async function DashboardPage() {
     },
     { done: (vets.count ?? 0) > 0, label: "Anlaşmalı veterinerleri ekle", href: "/yonetim/veterinerler/yeni" },
     { done: Boolean(settings.iban), label: "Bağış için IBAN bilgisini gir", href: "/yonetim/ayarlar#bagis" },
+    { done: (posts.count ?? 0) > 0, label: "İlk yazıyı ya da rehberi yaz", href: "/yonetim/yazilar/yeni" },
     { done: (shelters.count ?? 0) > 0, label: "Besleme noktalarını haritaya ekle", href: "/yonetim/yuvalar/yeni" },
   ];
   const doneCount = checklist.filter((item) => item.done).length;

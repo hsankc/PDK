@@ -6,6 +6,8 @@ import { getResource } from "@/lib/admin/resources";
 import type { Field, Option } from "@/lib/admin/types";
 import { isoToLocalInput, localInputToIso } from "@/lib/format";
 import { isLatLng } from "@/lib/map";
+import { emptyDoc, isRichTextDoc, plainText } from "@/lib/richtext";
+import { isValidSlug, slugify } from "@/lib/slug";
 import { createClient } from "@/lib/supabase/client";
 import { DeleteButton } from "./DeleteButton";
 import { FieldInput } from "./fields/FieldInput";
@@ -28,6 +30,8 @@ function readField(field: Field, row: Values | null) {
       return Boolean(value);
     case "images":
       return Array.isArray(value) ? value : [];
+    case "richtext":
+      return isRichTextDoc(value) ? value : emptyDoc;
     default:
       return value ?? "";
   }
@@ -35,6 +39,7 @@ function readField(field: Field, row: Values | null) {
 
 /** Form değerini veritabanına yazılacak sütun(lar)a çevirir. */
 function writeField(field: Field, value: unknown): [string, unknown][] {
+  if (field.keepDefaultWhenEmpty && !String(value ?? "").trim()) return [];
   switch (field.type) {
     case "location": {
       const point = isLatLng(value) ? value : null;
@@ -54,6 +59,8 @@ function writeField(field: Field, value: unknown): [string, unknown][] {
       return [[field.name, Boolean(value)]];
     case "images":
       return [[field.name, Array.isArray(value) ? value : []]];
+    case "richtext":
+      return [[field.name, isRichTextDoc(value) ? value : emptyDoc]];
     case "number":
       return [
         [
@@ -73,6 +80,7 @@ function writeField(field: Field, value: unknown): [string, unknown][] {
 function isEmpty(field: Field, value: unknown) {
   if (field.type === "location") return !isLatLng(value);
   if (field.type === "images") return !Array.isArray(value) || value.length === 0;
+  if (field.type === "richtext") return !plainText(value);
   return !String(value ?? "").trim();
 }
 
@@ -98,7 +106,20 @@ export function ResourceForm({
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const missing = resource.fields.find((field) => field.required && isEmpty(field, values[field.name]));
+    // Web adresi (slug) boşsa başlıktan üret; yazılmışsa kurala uygun hâle getir
+    const prepared: Values = { ...values };
+    for (const field of resource.fields) {
+      if (field.type !== "slug") continue;
+      const source = String(prepared[field.name] ?? "").trim() || String(prepared[field.slugFrom ?? ""] ?? "");
+      prepared[field.name] = slugify(source);
+      if (!isValidSlug(String(prepared[field.name]))) {
+        setStatus({ kind: "error", message: `"${field.label}" için önce başlığı yaz.` });
+        return;
+      }
+    }
+    setValues(prepared);
+
+    const missing = resource.fields.find((field) => field.required && isEmpty(field, prepared[field.name]));
     if (missing) {
       setStatus({ kind: "error", message: `"${missing.label}" alanı zorunlu.` });
       document.getElementById(`field-${missing.name}`)?.focus();
@@ -106,7 +127,10 @@ export function ResourceForm({
     }
 
     setStatus({ kind: "saving" });
-    const payload = Object.fromEntries(resource.fields.flatMap((field) => writeField(field, values[field.name])));
+    const payload = {
+      ...Object.fromEntries(resource.fields.flatMap((field) => writeField(field, prepared[field.name]))),
+      ...resource.fixed,
+    };
     const table = createClient().from(resource.table);
     const { error } = row
       ? await table
@@ -117,7 +141,13 @@ export function ResourceForm({
       : await table.insert(payload).select("id").single();
 
     if (error) {
-      setStatus({ kind: "error", message: `Kaydedilemedi: ${error.message}` });
+      setStatus({
+        kind: "error",
+        message:
+          error.code === "23505"
+            ? "Bu web adresi başka bir kayıtta kullanılıyor. Adresi biraz değiştirip tekrar dene."
+            : `Kaydedilemedi: ${error.message}`,
+      });
       return;
     }
     setStatus({ kind: "saved" });

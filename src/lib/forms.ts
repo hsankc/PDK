@@ -48,6 +48,43 @@ export const adoptionSchema = z.object({
   message: optionalText(3000),
 });
 
+const optionalDate = z
+  .union([z.literal(""), z.iso.date("Tarihi gün.ay.yıl olarak seç.")])
+  .transform((value) => value || null);
+
+export const lostFoundReportSchema = z.object({
+  kind: z.enum(["kayip", "bulundu"], "Kayıp mı bulundu mu, seç."),
+  species: z.enum(["kedi", "kopek", "diger"]),
+  animal_name: optionalText(120),
+  description: z.string().trim().min(5, "Hayvanı biraz anlat (rengi, tasması…).").max(3000),
+  area: optionalText(200),
+  seen_on: optionalDate,
+  photo_link: z
+    .union([z.literal(""), z.url({ protocol: /^https?$/, error: "Geçerli bir bağlantı yaz (https://…)." })])
+    .transform((value) => value || null),
+  contact_name: z.string().trim().min(2, "Adını yaz.").max(120),
+  contact_phone: z.string().trim().min(7, "Telefon numaranı yaz.").max(30),
+  contact_email: z
+    .union([z.literal(""), z.email("Geçerli bir e-posta adresi yaz.")])
+    .transform((value) => value || null),
+});
+
+export const volunteerSchema = z.object({
+  kind: z.enum(["gonullu", "gecici_yuva"], "Başvuru türünü seç."),
+  full_name: z.string().trim().min(2, "Adını ve soyadını yaz.").max(120),
+  phone: z.string().trim().min(7, "Telefon numaranı yaz.").max(30),
+  email: z.union([z.literal(""), z.email("Geçerli bir e-posta adresi yaz.")]).transform((value) => value || null),
+  district: optionalText(120),
+  availability: optionalText(500),
+  housing: z
+    .union([z.literal(""), z.enum(["apartman", "bahceli", "yurt", "diger"])])
+    .transform((value) => value || null),
+  other_pets: optionalText(500),
+  can_host: optionalText(200),
+  duration: optionalText(120),
+  message: optionalText(3000),
+});
+
 export function formDataToObject(formData: FormData, keys: string[]) {
   return Object.fromEntries(keys.map((key) => [key, String(formData.get(key) ?? "")]));
 }

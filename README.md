@@ -46,12 +46,17 @@ npm run dev
 | **İyileştirdiklerimiz** | Önce/sonra fotoğrafları ve iyileşme hikâyeleri |
 | **Anlaşmalı Veterinerler** | Klinikler; konum girilirse haritada görünür |
 | **Yuva & Besleme Noktaları** | Haritadaki mama, su, kulübe noktaları. Noktanın yanındaysan "Konumumu kullan" |
+| **Yazı Köşesi** | Blog yazıları; Word benzeri editörle başlık, liste, bağlantı ve resim eklenir |
+| **Rehberler** | "Nasıl yardım ederim?" yazıları; sıra numarasıyla listelenir |
+| **Kayıp & Bulundu** | Sitedeki ilanlar; sahibine kavuşunca durumu "Kavuştu" yap |
 | **Kısırlaştırma** | Planlananlar takvimde, "Yapıldı" olanlar sayaçta görünür |
 | **Projelerimiz** | Projeler, durum ve ilerleme yüzdesi |
 | **Borçlar** | Destek Ol sayfasında şeffaf borç listesi; ödeme yaptıkça "Ödenen"i güncelle |
 | **İhtiyaç Listesi** | Mama, kum, ilaç…; "Acil" ve "Karşılandı" işaretlenebilir |
 | **Üyelik Başvuruları** | "Kulübe Katıl" formundan gelenler; durum ve ekip notu eklenebilir |
 | **Sahiplenme Başvuruları** | İlan sayfalarındaki formdan gelenler |
+| **Kayıp/Bulundu Bildirimleri** | Ziyaretçi bildirimleri; "İlan taslağı oluştur" ile tek tıkla ilana çevrilir |
+| **Gönüllü & Geçici Yuva** | Gönüllü ol formundan gelenler |
 | **İstek & Öneriler** | Öneri köşesinden gelenler; açınca "okundu" olur |
 
 - Fotoğraflar yüklenirken otomatik küçültülür, telefondan çekilen büyük fotoğraflar sorun olmaz.
@@ -89,5 +94,6 @@ npm run dev      # geliştirme sunucusu
 npm run build    # üretim derlemesi
 npm run lint     # ESLint
 npm run check:sql  # SQL göçlerini + güvenlik kurallarını Supabase'siz test eder (PGlite)
+npm run check:live # canlı Supabase izinlerini ziyaretçi gözüyle kontrol eder (veri yazmaz)
 npx prettier --write "src/**/*.{ts,tsx,css}"
 ```

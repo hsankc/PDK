@@ -1,14 +1,19 @@
 import {
+  BookOpen,
   CalendarDays,
   FolderKanban,
   HandHeart,
+  HandHelping,
   Heart,
   HeartPulse,
   IdCard,
   ListChecks,
   MapPin,
+  Megaphone,
   MessageSquare,
+  PenLine,
   Scissors,
+  Search,
   Stethoscope,
   Users,
   Wallet,
@@ -29,6 +34,11 @@ const icons = {
   "list-checks": ListChecks,
   "folder-kanban": FolderKanban,
   scissors: Scissors,
+  pen: PenLine,
+  "book-open": BookOpen,
+  search: Search,
+  megaphone: Megaphone,
+  "hand-helping": HandHelping,
 } satisfies Record<IconName, unknown>;
 
 export function ResourceIcon({ name, className }: { name: IconName; className?: string }) {
