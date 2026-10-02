@@ -9,15 +9,22 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 ---
 
 ## 📌 Kaldığımız yer (03.10.2026)
-- **Bitti:** Faz 0–4. Derleme, lint, tip kontrolü ve `npm run check:sql` temiz.
-- **Supabase bağlandı** (`.env.local` hazır). `0001`–`0004` çalıştırıldı, Hasan yönetici.
-  - `0004_icerik.sql` de çalıştırıldı; `npm run check:live` hepsi yeşil (03.10.2026).
-  - Nehir'in hesabı açılıp yönetici yapılacak (aynı SQL tekrar çalıştırılır).
-  - "Allow new users to sign up" kapatıldı mı, kontrol edilecek.
-- **Sıradaki iş:**
-  - Panelin uçtan uca testi: ayar kaydetme, logo yükleme, ekle/sil, formlar (sonraya bırakıldı).
-  - Faz 5: mini oyunlar, gizli pati avı, karanlık mod, SEO, yayına alma.
+- **Bitti:** Faz 0–4. Supabase bağlı, `0001`–`0004` çalıştırıldı, `npm run check:live` yeşil.
+- **İçerik Instagram'dan aktarıldı** (@patilidostlar_kulubu), panelin kendi formlarıyla:
+  - Site ayarları, logo, Hakkımızda; 1 etkinlik (3 Ekim okey); Müjgan ilanı; PatiZone projesi; 4 rehber; 5 yazı.
+- **Panel uçtan uca test edildi:** giriş, kaydetme, düzenleme, resim yükleme (tekli/çoklu/editör içi), 5 form,
+  gelen kutusu (durum + not, otomatik "okundu"), bildirimi ilana çevirme. Silme henüz denenmedi.
+- **TEST kayıtları duruyor** (Hasan görünce silinecek): öneri, üyelik, sahiplenme, kayıp bildirimi,
+  gizli taslak kayıp ilanı, gönüllü/geçici yuva başvurusu.
+- **Nehir'in doldurması gerekenler:**
+  - Ekip, anlaşmalı veterinerler, besleme noktaları.
+  - IBAN, borçlar ve ihtiyaç listesi, sayaçlar.
+  - Misyon/vizyon, iletişim bilgileri, harita merkezi.
+  - Logoyu yüksek çözünürlüklü orijinal dosyayla değiştirmek (Instagram'daki 150 px).
+- **Kontrol edilecek:** Müjgan hâlâ yuva arıyor mu (Ağustos paylaşımı)?
+- **Sıradaki iş:** Faz 5: mini oyunlar, gizli pati avı, karanlık mod, SEO, yayına alma.
 - **Bekleyenler:**
+  - Nehir'in hesabı açılıp yönetici yapılacak.
   - Nehir'e sorulacak:
     - Besleme noktalarının tam konumu herkese açık mı olsun?
     - "Kısırlaştırma takevi" = takvim + takip diye yapıldı; doğru mu?
