@@ -18,7 +18,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
   - Nehir'e sorulacak:
     - Besleme noktalarının tam konumu herkese açık mı olsun?
     - "Kısırlaştırma takevi" = takvim + takip diye yapıldı; doğru mu?
-  - Henüz git commit atılmadı.
+  - Kod GitHub'da: https://github.com/hsankc/PDK (`main` dalı, Faz 0–3 gönderildi).
 
 ---
 
