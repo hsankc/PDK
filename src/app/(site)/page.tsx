@@ -18,6 +18,7 @@ import {
   getNextEvent,
   getPosts,
   getTeamMembers,
+  getUpcomingEvents,
   summarizeDebts,
   type ClubEvent,
   type Fact,
@@ -27,9 +28,10 @@ import { dateParts, formatDate, formatMoney } from "@/lib/format";
 import { getSettings, paragraphs, type SiteSettings } from "@/lib/settings";
 
 export default async function HomePage() {
-  const [settings, nextEvent, team, adoptions, debts, needs, posts, fact] = await Promise.all([
+  const [settings, nextEvent, upcoming, team, adoptions, debts, needs, posts, fact] = await Promise.all([
     getSettings(),
     getNextEvent(),
+    getUpcomingEvents(4),
     getTeamMembers(),
     getAdoptions(),
     getDebts(),
@@ -41,6 +43,7 @@ export default async function HomePage() {
   const waiting = adoptions.filter((animal) => animal.status === "sahiplendirilebilir");
   const debtSummary = summarizeDebts(debts);
   const urgentNeeds = needs.filter((need) => need.is_urgent && !need.is_fulfilled);
+  const otherEvents = upcoming.filter((event) => event.id !== nextEvent?.id).slice(0, 3);
 
   return (
     <>
@@ -48,7 +51,7 @@ export default async function HomePage() {
 
       {settings.stats.length > 0 && <Stats stats={settings.stats} />}
 
-      {nextEvent && <NextEvent event={nextEvent} />}
+      {(nextEvent || otherEvents.length > 0) && <UpcomingEvents next={nextEvent} others={otherEvents} />}
 
       {fact && <FactOfTheDay fact={fact} />}
 
@@ -230,11 +233,79 @@ function Stats({ stats }: { stats: SiteSettings["stats"] }) {
   );
 }
 
+function UpcomingEvents({ next, others }: { next: ClubEvent | null; others: ClubEvent[] }) {
+  return (
+    <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      {next && <NextEvent event={next} />}
+      {others.length > 0 && (
+        <div className={next ? "mt-10" : ""}>
+          <Reveal className="mb-5 flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-display text-3xl font-extrabold">
+              {next ? "Yaklaşan diğer etkinlikler" : "Yaklaşan etkinlikler"}
+            </h2>
+            {!next && (
+              <Link href="/etkinlikler" className="btn btn-white btn-sm">
+                Tüm etkinlikler <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            )}
+          </Reveal>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {others.map((event, index) => (
+              <Reveal key={event.id} delay={index * 0.08}>
+                <UpcomingEventLink event={event} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function UpcomingEventLink({ event }: { event: ClubEvent }) {
+  const { day, month } = dateParts(event.starts_at);
+  const lastDay =
+    event.ends_at && formatDate(event.ends_at) !== formatDate(event.starts_at) ? dateParts(event.ends_at).day : null;
+
+  return (
+    <Link
+      href={`/etkinlikler/${event.id}`}
+      className="card group flex h-full items-stretch overflow-hidden transition-transform duration-200 hover:-translate-y-1"
+    >
+      <div className="border-ink bg-brand text-paper relative w-28 shrink-0 border-r-2">
+        {event.cover_url && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={event.cover_url} alt="" loading="lazy" className="absolute inset-0 size-full object-cover" />
+        )}
+        <span className="bg-paper text-ink border-ink shadow-hard-sm absolute top-2 left-2 flex flex-col items-center rounded-xl border-2 px-2 py-0.5 leading-none">
+          <span className="font-display text-lg font-extrabold">{lastDay ? `${day}–${lastDay}` : day}</span>
+          <span className="text-[0.65rem] font-bold uppercase">{month}</span>
+        </span>
+      </div>
+      <div className="flex flex-col gap-1.5 p-4">
+        <h3 className="font-display group-hover:text-brand text-lg leading-tight font-extrabold transition-colors">
+          {event.title}
+        </h3>
+        <p className="text-ink-soft flex items-center gap-1.5 text-sm font-bold">
+          <CalendarDays className="text-brand size-4 shrink-0" aria-hidden="true" />
+          {formatDate(event.starts_at, true)}
+        </p>
+        {event.location && (
+          <p className="text-ink-soft flex items-center gap-1.5 text-sm font-bold">
+            <MapPin className="text-brand size-4 shrink-0" aria-hidden="true" />
+            <span className="line-clamp-1">{event.location}</span>
+          </p>
+        )}
+      </div>
+    </Link>
+  );
+}
+
 function NextEvent({ event }: { event: ClubEvent }) {
   const { day, month } = dateParts(event.starts_at);
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <>
       <Reveal>
         <div className="card grid overflow-hidden md:grid-cols-[0.9fr_1.4fr]">
           <div className="border-ink bg-brand relative min-h-56 border-b-2 md:border-r-2 md:border-b-0">
@@ -250,7 +321,11 @@ function NextEvent({ event }: { event: ClubEvent }) {
           </div>
           <div className="flex flex-col gap-4 p-6 sm:p-8">
             <p className="sticker bg-ink text-paper self-start">Sıradaki etkinlik</p>
-            <h2 className="font-display text-3xl leading-tight font-extrabold sm:text-4xl">{event.title}</h2>
+            <h2 className="font-display text-3xl leading-tight font-extrabold sm:text-4xl">
+              <Link href={`/etkinlikler/${event.id}`} className="hover:text-brand transition-colors">
+                {event.title}
+              </Link>
+            </h2>
             <ul className="text-ink-soft flex flex-wrap gap-x-5 gap-y-1.5 font-bold">
               <li className="flex items-center gap-1.5">
                 <CalendarDays className="text-brand size-5" aria-hidden="true" />
@@ -264,13 +339,18 @@ function NextEvent({ event }: { event: ClubEvent }) {
               )}
             </ul>
             <Countdown target={event.starts_at} />
-            <Link href="/etkinlikler" className="btn btn-white btn-sm mt-2 self-start">
-              Tüm etkinlikler <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <Link href={`/etkinlikler/${event.id}`} className="btn btn-black btn-sm">
+                Detaylar
+              </Link>
+              <Link href="/etkinlikler" className="btn btn-white btn-sm">
+                Tüm etkinlikler <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </div>
       </Reveal>
-    </section>
+    </>
   );
 }
 

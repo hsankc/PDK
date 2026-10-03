@@ -474,6 +474,22 @@ export async function getNextEvent(): Promise<ClubEvent | null> {
   return data;
 }
 
+/** Henüz bitmemiş etkinlikler (sürmekte olanlar dahil), yakından uzağa. */
+export async function getUpcomingEvents(limit = 4): Promise<ClubEvent[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  const now = new Date().toISOString();
+  const { data, error } = await supabase
+    .from("events")
+    .select(EVENT_COLUMNS)
+    .eq("is_published", true)
+    .or(`starts_at.gte.${now},ends_at.gte.${now}`)
+    .order("starts_at", { ascending: true })
+    .limit(limit);
+  logError("Yaklaşan etkinlikler", error);
+  return data ?? [];
+}
+
 // --------------------------------------------------------------- Arşiv
 
 export type CampusPet = {
