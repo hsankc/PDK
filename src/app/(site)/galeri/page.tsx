@@ -20,7 +20,11 @@ export default async function GalleryPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Sizden gelenler" title="Pati Galerisi">
+      <PageHeader
+        eyebrow="Sizden gelenler"
+        title="Pati Galerisi"
+        paw={{ id: "galeri", className: "bottom-6 right-[12%] -rotate-45" }}
+      >
         {settings.gallery_intro ? (
           <p className="whitespace-pre-line">{settings.gallery_intro}</p>
         ) : (

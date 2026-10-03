@@ -1,4 +1,6 @@
+import { MotionProvider } from "@/components/MotionProvider";
 import { PawClicks } from "@/components/pets/PawClicks";
+import { PawHuntProvider } from "@/components/pets/PawHunt";
 import { PeekingPets } from "@/components/pets/PeekingPets";
 import { AnnouncementBar } from "@/components/site/AnnouncementBar";
 import { Footer } from "@/components/site/Footer";
@@ -11,31 +13,41 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   const settings = await getSettings();
 
   return (
-    <>
-      {settings.announcement_active && (
-        <AnnouncementBar text={settings.announcement_text} link={safeHref(settings.announcement_link)} />
-      )}
-      <Navbar
-        clubName={settings.club_name}
-        shortName={settings.short_name}
-        logoUrl={settings.logo_url}
-        membershipOpen={settings.membership_open}
-      />
-      <main className="flex-1">{children}</main>
-      <Footer settings={settings} />
+    <MotionProvider>
+      <PawHuntProvider enabled={settings.paw_hunt_enabled} message={settings.paw_hunt_message}>
+        <a
+          href="#icerik"
+          className="bg-ink text-paper sr-only z-[100] rounded-full px-5 py-2.5 font-bold focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        >
+          İçeriğe atla
+        </a>
+        {settings.announcement_active && (
+          <AnnouncementBar text={settings.announcement_text} link={safeHref(settings.announcement_link)} />
+        )}
+        <Navbar
+          clubName={settings.club_name}
+          shortName={settings.short_name}
+          logoUrl={settings.logo_url}
+          membershipOpen={settings.membership_open}
+        />
+        <main id="icerik" tabIndex={-1} className="flex-1 outline-none">
+          {children}
+        </main>
+        <Footer settings={settings} />
 
-      {settings.pets_enabled && (
-        <>
-          <PeekingPets />
-          <PawClicks />
-        </>
-      )}
+        {settings.pets_enabled && (
+          <>
+            <PeekingPets />
+            <PawClicks />
+          </>
+        )}
 
-      {!isSupabaseConfigured && process.env.NODE_ENV !== "production" && (
-        <p className="border-ink bg-paper shadow-hard fixed bottom-3 left-1/2 z-[70] -translate-x-1/2 rounded-full border-2 px-4 py-2 text-sm font-bold">
-          Supabase bağlı değil: <code>.env.local</code> dosyasını doldurun (README).
-        </p>
-      )}
-    </>
+        {!isSupabaseConfigured && process.env.NODE_ENV !== "production" && (
+          <p className="border-ink bg-paper shadow-hard fixed bottom-3 left-1/2 z-[70] -translate-x-1/2 rounded-full border-2 px-4 py-2 text-sm font-bold">
+            Supabase bağlı değil: <code>.env.local</code> dosyasını doldurun (README).
+          </p>
+        )}
+      </PawHuntProvider>
+    </MotionProvider>
   );
 }

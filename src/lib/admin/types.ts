@@ -81,7 +81,8 @@ export type ResourceIcon =
   | "lightbulb"
   | "images"
   | "history"
-  | "handshake";
+  | "handshake"
+  | "gamepad";
 
 export interface ResourceConfig {
   /** Panel adresi: /yonetim/<slug> */
@@ -109,6 +110,8 @@ export interface ResourceConfig {
     /** Kayıt panelde açılınca otomatik geçilecek durum (örn. "okundu") */
     openedValue?: string;
   };
+  /** false ise panelden yeni kayıt eklenemez (örn. sitede oluşan oyun skorları) */
+  allowCreate?: boolean;
   /** Sitede görüneceği adres (panelden "sitede gör" bağlantısı için) */
   publicPath?: string;
   /** Aynı tabloyu paylaşan bölümler için sabit sütun değerleri (örn. { kind: "rehber" }).

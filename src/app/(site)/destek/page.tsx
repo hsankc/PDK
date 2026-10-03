@@ -23,7 +23,11 @@ export default async function SupportPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Şeffaflık" title="Destek Ol">
+      <PageHeader
+        eyebrow="Şeffaflık"
+        title="Destek Ol"
+        paw={{ id: "destek", className: "right-[40%] bottom-2 -rotate-6" }}
+      >
         {settings.support_intro ? (
           <p className="whitespace-pre-line">{settings.support_intro}</p>
         ) : (

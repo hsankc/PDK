@@ -18,7 +18,11 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Biz kimiz?" title={settings.about_title || "Hakkımızda"} />
+      <PageHeader
+        eyebrow="Biz kimiz?"
+        title={settings.about_title || "Hakkımızda"}
+        paw={{ id: "hakkimizda", className: "right-[22%] bottom-4 rotate-12" }}
+      />
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         {!hasContent && <EmptyState title="Bu sayfa yakında dolacak">Kulübümüzü anlatan yazı hazırlanıyor.</EmptyState>}

@@ -3,6 +3,7 @@ import {
   CalendarDays,
   Cat,
   FolderKanban,
+  Gamepad2,
   HandHeart,
   HandHelping,
   Handshake,
@@ -49,6 +50,7 @@ const icons = {
   images: Images,
   history: History,
   handshake: Handshake,
+  gamepad: Gamepad2,
 } satisfies Record<IconName, unknown>;
 
 export function ResourceIcon({ name, className }: { name: IconName; className?: string }) {

@@ -2,6 +2,7 @@ import { ArrowRight, CalendarDays, Heart, Lightbulb, MapPin, TriangleAlert } fro
 import Link from "next/link";
 import { CatFace } from "@/components/pets/CatFace";
 import { HeroPets } from "@/components/pets/HeroPets";
+import { JsonLd } from "@/components/site/JsonLd";
 import { PawIcon } from "@/components/pets/PawIcon";
 import { AdoptionCard } from "@/components/site/adoption/AdoptionCard";
 import { Countdown } from "@/components/site/Countdown";
@@ -26,6 +27,8 @@ import {
 } from "@/lib/data";
 import { dateParts, formatDate, formatMoney } from "@/lib/format";
 import { getSettings, paragraphs, type SiteSettings } from "@/lib/settings";
+import { SITE_URL } from "@/lib/site-url";
+import { safeHref } from "@/lib/url";
 
 export default async function HomePage() {
   const [settings, nextEvent, upcoming, team, adoptions, debts, needs, posts, fact] = await Promise.all([
@@ -45,8 +48,33 @@ export default async function HomePage() {
   const urgentNeeds = needs.filter((need) => need.is_urgent && !need.is_fulfilled);
   const otherEvents = upcoming.filter((event) => event.id !== nextEvent?.id).slice(0, 3);
 
+  const sameAs = [
+    settings.instagram_url,
+    settings.x_url,
+    settings.youtube_url,
+    settings.tiktok_url,
+    settings.linkedin_url,
+  ]
+    .map((url) => safeHref(url))
+    .filter((url): url is string => Boolean(url));
+
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: settings.club_name,
+          url: SITE_URL,
+          logo: settings.logo_url || undefined,
+          description: settings.tagline || undefined,
+          email: settings.email || undefined,
+          parentOrganization: settings.university
+            ? { "@type": "CollegeOrUniversity", name: settings.university }
+            : undefined,
+          sameAs: sameAs.length ? sameAs : undefined,
+        }}
+      />
       <Hero settings={settings} />
 
       {settings.stats.length > 0 && <Stats stats={settings.stats} />}
@@ -157,7 +185,7 @@ function Hero({ settings }: { settings: SiteSettings }) {
   return (
     <section className="bg-paws relative overflow-hidden">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-10 pb-16 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:pt-16 lg:pb-24">
-        <Reveal>
+        <div className="animate-rise">
           {settings.hero_badge && (
             <p className="sticker shadow-hard-sm mb-6 -rotate-2">
               <PawIcon className="fill-brand size-4" />
@@ -194,11 +222,11 @@ function Hero({ settings }: { settings: SiteSettings }) {
               Etkinlikler
             </Link>
           </div>
-        </Reveal>
+        </div>
 
         <div>
           {settings.hero_image_url ? (
-            <Reveal delay={0.15} className="relative mx-auto max-w-md pt-14">
+            <div className="animate-rise relative mx-auto max-w-md pt-14 [animation-delay:150ms]">
               <CatFace paws className="absolute top-0 left-8 z-10 w-28 sm:w-32" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -206,7 +234,7 @@ function Hero({ settings }: { settings: SiteSettings }) {
                 alt=""
                 className="border-ink shadow-hard-lg relative aspect-[4/5] w-full rotate-2 rounded-[2.5rem] border-4 object-cover"
               />
-            </Reveal>
+            </div>
           ) : (
             <HeroPets label={settings.short_name || settings.club_name} />
           )}

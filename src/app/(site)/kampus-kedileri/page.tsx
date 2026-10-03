@@ -18,7 +18,11 @@ export default async function CampusPetsPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Kampüsün yerlileri" title="Kampüs Kedileri">
+      <PageHeader
+        eyebrow="Kampüsün yerlileri"
+        title="Kampüs Kedileri"
+        paw={{ id: "kampus-kedileri", className: "top-10 right-[30%] rotate-6" }}
+      >
         {settings.campus_pets_intro ? (
           <p className="whitespace-pre-line">{settings.campus_pets_intro}</p>
         ) : (

@@ -74,6 +74,10 @@ export interface SiteSettings {
   history_intro: string;
   partners_intro: string;
 
+  games_intro: string;
+  paw_hunt_enabled: boolean;
+  paw_hunt_message: string;
+
   map_center: LatLng | null;
   map_zoom: number;
 
@@ -147,6 +151,10 @@ export const defaultSettings: SiteSettings = {
   gallery_intro: "",
   history_intro: "",
   partners_intro: "",
+
+  games_intro: "",
+  paw_hunt_enabled: true,
+  paw_hunt_message: "",
 
   map_center: null,
   map_zoom: 15,

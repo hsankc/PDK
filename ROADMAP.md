@@ -10,7 +10,8 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 
 ## 📌 Kaldığımız yer (03.10.2026)
 
-- **Bitti:** Faz 0–4 + Arşiv bölümleri. Supabase bağlı, `0001`–`0005` çalıştırıldı, `npm run check:live` yeşil.
+- **Bitti:** Faz 0–5 (yayına alma hariç). Supabase bağlı, `0001`–`0006` çalıştırıldı, `npm run check:live` yeşil.
+- **Lighthouse (mobil, üretim derlemesi):** performans 85–89, erişilebilirlik / en iyi uygulamalar / SEO 100.
 - **Instagram'ın tamamı aktarıldı** (@patilidostlar_kulubu, 2022–2026, 218 paylaşım):
   - İlk tur: site ayarları, logo, Hakkımızda, 3 Ekim okey, Müjgan, PatiZone, 4 rehber, 5 yazı.
   - İkinci tur: 49 geçmiş etkinlik (duyuru + fotoğraflar birleştirildi) + 13–14 Ekim stant günleri, 29 "Biliyor musun?" bilgisi,
@@ -33,7 +34,8 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - **Kontrol edilecek:**
   - Müjgan hâlâ yuva arıyor mu (Ağustos paylaşımı)?
   - Kampüs kedilerinde Nurcan (Sultanlar) ile Necla (Manifest) aynı kedi mi?
-- **Sıradaki iş:** Faz 5: mini oyunlar, gizli pati avı, karanlık mod, SEO, yayına alma.
+- **Sıradaki iş:** Yayına alma (Vercel + alan adı). Öncesinde TEST kayıtları silinecek
+  (oyun skor tablosundaki "TEST" skoru dahil).
 - **Bekleyenler:**
   - Nehir'in hesabı açılıp yönetici yapılacak.
   - Nehir'e sorulacak:
@@ -104,14 +106,16 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] Destekçilerimiz: kurum, dernek, kulüp, işletme ve sponsorlar
 - [x] Menüde "Keşfet" açılır menüsü
 
-## Faz 5 — Eğlence ve Cila ⏳
+## Faz 5 — Eğlence ve Cila 🚧
 
-- [ ] Mini oyunlar: Mama Yakala, Hafıza Kartları (+ skor tablosu)
-- [ ] Gizli pati avı (sayfalara saklanmış patileri bulana sürpriz)
-- [ ] Karanlık mod
-- [ ] SEO, paylaşım görselleri, site haritası
-- [ ] Erişilebilirlik ve performans kontrolü
-- [ ] Yayına alma: Vercel + alan adı
+- [x] Pati Oyunları (`/oyunlar`): Mama Yakala (zararlı yiyeceklerden kaç), kampüs kedileriyle Hafıza Kartları
+- [x] Skor tablosu (`0006_oyunlar.sql`); uygunsuz isimler panelden gizlenir/silinir
+- [x] Gizli pati avı: 7 sayfa başlığına saklı pati, ilerleme kartı, hepsini bulana panelden yazılan mesaj
+- [x] Karanlık mod (cihaz temasına uyar, menüdeki düğmeyle değişir; harita da kararır)
+- [x] SEO: paylaşım görseli, site haritası, robots.txt, manifest, kulüp ve etkinlik yapılandırılmış verisi
+- [x] Erişilebilirlik ve performans: içeriğe atla bağlantısı, odak halkası, "hareketi azalt" desteği,
+      ilk görüntünün JS beklemeden çizilmesi, ilk ilan fotoğraflarının öncelikli yüklenmesi
+- [ ] Yayına alma: Vercel + alan adı (README → "Yayına alma")
 
 ---
 

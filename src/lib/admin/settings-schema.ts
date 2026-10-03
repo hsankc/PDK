@@ -189,6 +189,23 @@ export const settingsGroups: SettingsGroup[] = [
     ],
   },
   {
+    id: "oyunlar",
+    title: "Oyunlar ve gizli pati avı",
+    description: "Sitenin 7 farklı sayfasına küçük patiler saklandı; hepsini bulan ziyaretçiye aşağıdaki mesaj çıkar.",
+    fields: [
+      { name: "games_intro", label: "Pati Oyunları sayfası açıklaması", type: "textarea", rows: 2 },
+      { name: "paw_hunt_enabled", label: "Gizli pati avı açık", type: "boolean" },
+      {
+        name: "paw_hunt_message",
+        label: "Bütün patileri bulana çıkan mesaj",
+        type: "textarea",
+        rows: 3,
+        placeholder: "Örn: Bu ekranın görüntüsünü standımızda göster, sana küçük bir sürprizimiz var!",
+        help: "Boş bırakılırsa kısa bir tebrik mesajı çıkar.",
+      },
+    ],
+  },
+  {
     id: "harita",
     title: "Harita",
     description: "Haritaların ilk açıldığı yer. Kampüsü ya da mahallenizi seçin.",

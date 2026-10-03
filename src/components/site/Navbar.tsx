@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { isGroup, navItems, SUPPORT_HREF, type NavGroup } from "@/lib/nav";
+import { ThemeToggle } from "./ThemeToggle";
 import { LogoMark } from "./Logo";
 
 type Props = {
@@ -105,6 +106,7 @@ export function Navbar({ clubName, shortName, logoUrl, membershipOpen }: Props) 
           </nav>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             {membershipOpen && (
               <Link href="/katil" className="btn btn-red btn-sm hidden sm:inline-flex">
                 Kulübe Katıl

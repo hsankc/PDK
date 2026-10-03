@@ -371,5 +371,32 @@ await expectError(
   "insert into milestones (happened_on, title) values ('2020-01-01', 'x')",
 );
 
+console.log("\nFaz 5 — oyun skorları");
+await expectRows(
+  anon,
+  "ziyaretçi skor gönderir",
+  "insert into game_scores (game, player_name, score) values ('mama', 'Pati', 42)",
+  1,
+);
+await expectRows(
+  anon,
+  "hafıza skoru süreyle gönderilir",
+  "insert into game_scores (game, player_name, score, seconds) values ('hafiza', 'Mırmır', 14, 63)",
+  1,
+);
+await expectError(
+  anon,
+  "gizli skor gönderilemez",
+  "insert into game_scores (game, player_name, score, is_published) values ('mama', 'Hile', 9, false)",
+);
+await expectError(anon, "tek harfli isim reddedilir", "insert into game_scores (game, player_name, score) values ('mama', 'x', 5)");
+await expectError(anon, "aşırı skor reddedilir", "insert into game_scores (game, player_name, score) values ('mama', 'Hile', 99999)");
+await expectError(anon, "bilinmeyen oyun reddedilir", "insert into game_scores (game, player_name, score) values ('tetris', 'Pati', 5)");
+await expectRows(anon, "ziyaretçi skor tablosunu görür", "select * from game_scores", 2);
+await expectDenied(anon, "ziyaretçi skoru değiştiremez", "update game_scores set score = 4000");
+await expectDenied(anon, "ziyaretçi skor silemez", "delete from game_scores");
+await expectRows(admin, "yönetici uygunsuz ismi gizler", "update game_scores set is_published = false where player_name = 'Pati'", 1);
+await expectRows(anon, "gizlenen skor görünmez", "select * from game_scores", 1);
+
 console.log(failures ? `\n${failures} test başarısız.` : "\nTüm testler geçti.");
 process.exit(failures ? 1 : 0);

@@ -15,7 +15,11 @@ export default async function FactsPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Pati bilgileri" title="Biliyor musun?">
+      <PageHeader
+        eyebrow="Pati bilgileri"
+        title="Biliyor musun?"
+        paw={{ id: "biliyor-musun", className: "top-4 left-[55%] rotate-180" }}
+      >
         {settings.facts_intro ? (
           <p className="whitespace-pre-line">{settings.facts_intro}</p>
         ) : (

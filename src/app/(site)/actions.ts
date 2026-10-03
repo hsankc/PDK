@@ -6,6 +6,7 @@ import {
   isBot,
   lostFoundReportSchema,
   membershipSchema,
+  scoreSchema,
   suggestionSchema,
   volunteerSchema,
   zodErrors,
@@ -199,6 +200,25 @@ export async function submitVolunteer(_prev: FormState, formData: FormData): Pro
   const { error } = await supabase.from("volunteer_applications").insert(parsed.data);
   if (error) {
     console.error("Gönüllü başvurusu kaydedilemedi:", error.message);
+    return SAVE_FAILED;
+  }
+  return { status: "success" };
+}
+
+export async function submitScore(_prev: FormState, formData: FormData): Promise<FormState> {
+  if (isBot(formData)) return { status: "success" };
+
+  const parsed = scoreSchema.safeParse(formDataToObject(formData, ["game", "player_name", "score", "seconds"]));
+  if (!parsed.success) {
+    return { status: "error", message: "Lütfen adını kontrol et.", errors: zodErrors(parsed.error) };
+  }
+
+  const supabase = await getPublicClient();
+  if (!supabase) return NOT_CONFIGURED;
+
+  const { error } = await supabase.from("game_scores").insert(parsed.data);
+  if (error) {
+    console.error("Skor kaydedilemedi:", error.message);
     return SAVE_FAILED;
   }
   return { status: "success" };

@@ -52,6 +52,7 @@ npm run dev
 | **Kampüs Kedileri**            | Kampüsün yerlileri: lakap, burç, karakter, fotoğraflar                                                                  |
 | **Pati Galerisi**              | Üyelerden ve takipçilerden gelen fotoğraflar; aynı albüm adı sitede filtre olur                                         |
 | **Biliyor musun?**             | Kısa bilgiler; ana sayfada her gün biri "Günün bilgisi" olur                                                            |
+| **Oyun Skorları**              | Pati Oyunları skor tablosu; uygunsuz bir isim görürsen "Sitede göster"i kapat ya da sil                                 |
 | **Rehberler**                  | "Nasıl yardım ederim?" yazıları; sıra numarasıyla listelenir                                                            |
 | **Kayıp & Bulundu**            | Sitedeki ilanlar; sahibine kavuşunca durumu "Kavuştu" yap                                                               |
 | **Kısırlaştırma**              | Planlananlar takvimde, "Yapıldı" olanlar sayaçta görünür                                                                |
@@ -69,9 +70,18 @@ npm run dev
 - Yapılan her değişiklik **anında** sitede görünür.
 - Şifre unutulursa: Supabase → Authentication → Users → kullanıcı → **Send password recovery** ya da yeni şifre belirle.
 
-## 4. Yayına alma (Faz 5'te)
+## 4. Yayına alma
 
-[Vercel](https://vercel.com)'e GitHub deposunu bağla, **Environment Variables** kısmına `.env.local` içindeki iki değeri ekle, alan adını bağla.
+1. [vercel.com](https://vercel.com)'a GitHub hesabınla gir → **Add New → Project** → `PDK` deposunu seç (**Import**).
+2. **Environment Variables** kısmına `.env.local` içindeki iki değeri ekle:
+   `NEXT_PUBLIC_SUPABASE_URL` ve `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. → **Deploy**.
+3. Site `https://<proje>.vercel.app` adresinde açılır. Bundan sonra GitHub'a gönderilen her değişiklik otomatik yayınlanır.
+4. Supabase → **Authentication → URL Configuration → Site URL** kısmına sitenin adresini yaz
+   (şifre sıfırlama e-postaları doğru adrese gitsin).
+5. Alan adı alınırsa: Vercel → proje → **Settings → Domains** → alan adını ekle, gösterilen DNS kayıtlarını
+   alan adı firmasında gir. Sonra **Environment Variables**'a `NEXT_PUBLIC_SITE_URL=https://alanadi` ekleyip yeniden yayınla
+   (paylaşım kartları ve site haritası bu adresi kullanır).
+6. Paylaşım kartını denemek için linki WhatsApp'ta kendine gönder.
 
 ---
 

@@ -16,7 +16,11 @@ export default async function AdoptionsPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Yuva arıyoruz" title="Sahiplendirme">
+      <PageHeader
+        eyebrow="Yuva arıyoruz"
+        title="Sahiplendirme"
+        paw={{ id: "sahiplendirme", className: "bottom-3 left-[45%] rotate-45" }}
+      >
         {settings.adoption_intro ? (
           <p className="whitespace-pre-line">{settings.adoption_intro}</p>
         ) : (

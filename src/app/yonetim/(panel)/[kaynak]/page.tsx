@@ -42,7 +42,7 @@ export default async function ResourceListPage({ params, searchParams }: PagePro
                 <ExternalLink className="size-4" aria-hidden="true" /> Sitede gör
               </a>
             )}
-            {resource.kind === "content" && (
+            {resource.kind === "content" && resource.allowCreate !== false && (
               <Link href={`/yonetim/${resource.slug}/yeni`} className="btn btn-red btn-sm">
                 <Plus className="size-4" aria-hidden="true" /> Yeni {resource.singular.toLocaleLowerCase("tr-TR")}
               </Link>
@@ -67,7 +67,7 @@ export default async function ResourceListPage({ params, searchParams }: PagePro
               ? "Burada henüz bir şey yok"
               : `Henüz ${resource.singular.toLocaleLowerCase("tr-TR")} eklenmedi`}
           </p>
-          {resource.kind === "content" && (
+          {resource.kind === "content" && resource.allowCreate !== false && (
             <Link href={`/yonetim/${resource.slug}/yeni`} className="btn btn-red btn-sm mt-5">
               <Plus className="size-4" aria-hidden="true" /> İlkini ekle
             </Link>

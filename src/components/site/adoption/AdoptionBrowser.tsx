@@ -56,22 +56,25 @@ export function AdoptionBrowser({ animals }: { animals: Adoption[] }) {
       {visible.length === 0 ? (
         <p className="text-ink-soft py-12 text-center text-lg font-bold">Bu filtreye uyan dostumuz yok.</p>
       ) : (
-        <motion.ul layout className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-          <AnimatePresence mode="popLayout">
-            {visible.map((animal) => (
-              <motion.li
-                key={animal.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.25 }}
-              >
-                <AdoptionCard animal={animal} />
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </motion.ul>
+        <>
+          <h2 className="sr-only">Yuva arayan dostlar</h2>
+          <motion.ul layout className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+            <AnimatePresence mode="popLayout" initial={false}>
+              {visible.map((animal, index) => (
+                <motion.li
+                  key={animal.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <AdoptionCard animal={animal} priority={index < 4} />
+                </motion.li>
+              ))}
+            </AnimatePresence>
+          </motion.ul>
+        </>
       )}
     </div>
   );

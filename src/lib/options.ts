@@ -102,6 +102,11 @@ export const partnerKindOptions: Option[] = [
   { value: "sponsor", label: "Sponsor" },
 ];
 
+export const gameOptions: Option[] = [
+  { value: "mama", label: "Mama Yakala" },
+  { value: "hafiza", label: "Hafıza Kartları" },
+];
+
 export function labelOf(options: Option[], value: unknown) {
   return options.find((option) => option.value === value)?.label ?? "";
 }

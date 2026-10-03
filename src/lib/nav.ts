@@ -39,6 +39,7 @@ export const navItems: NavEntry[] = [
       { href: "/kampus-kedileri", label: "Kampüs Kedileri", description: "Kampüsün yerlileriyle tanış" },
       { href: "/galeri", label: "Pati Galerisi", description: "Sizden gelen kareler" },
       { href: "/biliyor-musun", label: "Biliyor musun?", description: "Kediler ve köpekler hakkında" },
+      { href: "/oyunlar", label: "Pati Oyunları", description: "Mama Yakala, Hafıza Kartları, pati avı" },
     ],
   },
   {

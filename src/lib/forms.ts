@@ -85,6 +85,25 @@ export const volunteerSchema = z.object({
   message: optionalText(3000),
 });
 
+export const scoreSchema = z
+  .object({
+    game: z.enum(["mama", "hafiza"]),
+    player_name: z
+      .string()
+      .trim()
+      .min(2, "En az 2 harf yaz.")
+      .max(20, "En fazla 20 karakter olabilir.")
+      .regex(/^[\p{L}\p{N} ._'!-]+$/u, "Sadece harf, rakam ve boşluk kullan."),
+    score: z.coerce.number().int().min(0).max(3000),
+    seconds: z
+      .union([z.literal(""), z.coerce.number().int().min(0).max(3600)])
+      .transform((value) => (value === "" ? null : value)),
+  })
+  .refine((value) => value.game !== "hafiza" || (value.score >= 8 && value.seconds !== null && value.seconds >= 5), {
+    message: "Skor geçersiz.",
+    path: ["score"],
+  });
+
 export function formDataToObject(formData: FormData, keys: string[]) {
   return Object.fromEntries(keys.map((key) => [key, String(formData.get(key) ?? "")]));
 }

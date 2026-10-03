@@ -3,9 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Countdown } from "@/components/site/Countdown";
+import { JsonLd } from "@/components/site/JsonLd";
 import { PhotoWall } from "@/components/site/PhotoWall";
 import { Reveal } from "@/components/site/Reveal";
 import { getEvent, isEventPast } from "@/lib/data";
+import { getSettings } from "@/lib/settings";
+import { SITE_URL } from "@/lib/site-url";
 import { formatDate, formatTime } from "@/lib/format";
 import { paragraphs } from "@/lib/settings";
 import { safeHref } from "@/lib/url";
@@ -24,7 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/etkinlikler/[id]"
 
 export default async function EventPage({ params }: PageProps<"/etkinlikler/[id]">) {
   const { id } = await params;
-  const event = await getEvent(id);
+  const [event, settings] = await Promise.all([getEvent(id), getSettings()]);
   if (!event) notFound();
 
   const past = isEventPast(event);
@@ -34,6 +37,21 @@ export default async function EventPage({ params }: PageProps<"/etkinlikler/[id]
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: event.title,
+          startDate: event.starts_at,
+          endDate: event.ends_at ?? undefined,
+          description: event.description ?? undefined,
+          image: [event.cover_url, ...event.photos].filter(Boolean).slice(0, 3),
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          location: { "@type": "Place", name: event.location || "Çanakkale", address: "Çanakkale, Türkiye" },
+          organizer: { "@type": "Organization", name: settings.club_name, url: SITE_URL },
+        }}
+      />
       <Link
         href="/etkinlikler"
         className="text-ink-soft hover:text-ink mb-6 inline-flex items-center gap-1.5 font-bold"

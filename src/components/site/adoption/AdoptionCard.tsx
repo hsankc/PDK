@@ -19,7 +19,7 @@ export function PetPlaceholder({ species, className = "" }: { species: string; c
   );
 }
 
-export function AdoptionCard({ animal }: { animal: Adoption }) {
+export function AdoptionCard({ animal, priority = false }: { animal: Adoption; priority?: boolean }) {
   const photo = adoptionPhoto(animal);
   const adopted = animal.status === "sahiplendirildi";
 
@@ -34,7 +34,8 @@ export function AdoptionCard({ animal }: { animal: Adoption }) {
           <img
             src={photo}
             alt={animal.name}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : undefined}
             className={`size-full object-cover transition-transform duration-500 group-hover:scale-105 ${adopted ? "saturate-50" : ""}`}
           />
         ) : (

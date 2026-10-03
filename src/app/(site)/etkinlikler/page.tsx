@@ -17,7 +17,11 @@ export default async function EventsPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Takvim" title="Etkinlikler">
+      <PageHeader
+        eyebrow="Takvim"
+        title="Etkinlikler"
+        paw={{ id: "etkinlikler", className: "top-5 right-8 -rotate-12" }}
+      >
         {next ? (
           <div className="mt-2 space-y-3">
             <p className="text-ink font-bold">

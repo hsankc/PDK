@@ -12,7 +12,7 @@ export default async function ResourceItemPage({ params }: PageProps<"/yonetim/[
   if (!resource) notFound();
 
   const isNew = id === "yeni";
-  if (isNew && resource.kind === "inbox") notFound();
+  if (isNew && (resource.kind === "inbox" || resource.allowCreate === false)) notFound();
 
   const { supabase } = await getAdminSession();
 

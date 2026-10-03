@@ -612,3 +612,33 @@ export async function getPartners(): Promise<Partner[]> {
   logError("Destekçiler", error);
   return data ?? [];
 }
+
+// --------------------------------------------------------------- Oyunlar
+
+export type Game = "mama" | "hafiza";
+
+export type GameScore = {
+  id: string;
+  player_name: string;
+  score: number;
+  seconds: number | null;
+  created_at: string;
+};
+
+/** Mama Yakala'da büyük puan, Hafıza Kartları'nda az hamle ve kısa süre önde. */
+export async function getLeaderboard(game: Game, limit = 10): Promise<GameScore[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  let query = supabase
+    .from("game_scores")
+    .select("id, player_name, score, seconds, created_at")
+    .eq("game", game)
+    .eq("is_published", true);
+  query =
+    game === "mama"
+      ? query.order("score", { ascending: false })
+      : query.order("score", { ascending: true }).order("seconds", { ascending: true, nullsFirst: false });
+  const { data, error } = await query.order("created_at", { ascending: true }).limit(limit);
+  logError("Skor tablosu", error);
+  return data ?? [];
+}
