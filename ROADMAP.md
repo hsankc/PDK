@@ -10,7 +10,8 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 
 ## 📌 Kaldığımız yer (03.10.2026)
 
-- **Bitti:** Faz 0–5 (yayına alma hariç). Supabase bağlı, `0001`–`0006` çalıştırıldı, `npm run check:live` yeşil.
+- **🌐 Yayında:** https://patilidostlar.vercel.app (Vercel, `main`'e her gönderimde otomatik güncellenir).
+- **Bitti:** Faz 0–5. Supabase bağlı, `0001`–`0006` çalıştırıldı, `npm run check:live` yeşil.
 - **Lighthouse (mobil, üretim derlemesi):** performans 85–89, erişilebilirlik / en iyi uygulamalar / SEO 100.
 - **Instagram'ın tamamı aktarıldı** (@patilidostlar_kulubu, 2022–2026, 218 paylaşım):
   - İlk tur: site ayarları, logo, Hakkımızda, 3 Ekim okey, Müjgan, PatiZone, 4 rehber, 5 yazı.
@@ -33,7 +34,8 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - **Kontrol edilecek:**
   - Müjgan hâlâ yuva arıyor mu (Ağustos paylaşımı)?
   - Kampüs kedilerinde Nurcan (Sultanlar) ile Necla (Manifest) aynı kedi mi?
-- **Sıradaki iş:** Yayına alma (Vercel + alan adı), README → "Yayına alma".
+- **Sıradaki iş:** Supabase → Authentication → URL Configuration → Site URL'ye canlı adresi yazmak;
+  istenirse alan adı bağlamak (README → "Yayına alma").
 - **Bekleyenler:**
   - Nehir'in hesabı açılıp yönetici yapılacak.
   - Nehir'e sorulacak:
@@ -104,7 +106,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] Destekçilerimiz: kurum, dernek, kulüp, işletme ve sponsorlar
 - [x] Menüde "Keşfet" açılır menüsü
 
-## Faz 5 — Eğlence ve Cila 🚧
+## Faz 5 — Eğlence ve Cila ✅
 
 - [x] Pati Oyunları (`/oyunlar`): Mama Yakala (zararlı yiyeceklerden kaç), kampüs kedileriyle Hafıza Kartları
 - [x] Skor tablosu (`0006_oyunlar.sql`); uygunsuz isimler panelden gizlenir/silinir
@@ -116,7 +118,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] KVKK aydınlatma metni (`/kvkk`, panelden düzenlenebilir), form onaylarında bağlantı,
       panelde 1 yıldan eski başvurular için hatırlatma + temizleme düğmesi
 - [x] Supabase'in uyumaması için günlük Vercel zamanlayıcısı (`/api/keep-alive`)
-- [ ] Yayına alma: Vercel + alan adı (README → "Yayına alma")
+- [x] Yayına alma: https://patilidostlar.vercel.app (alan adı isteğe bağlı) (README → "Yayına alma")
 
 ---
 
