@@ -82,6 +82,17 @@ npm run dev
    alan adı firmasında gir. Sonra **Environment Variables**'a `NEXT_PUBLIC_SITE_URL=https://alanadi` ekleyip yeniden yayınla
    (paylaşım kartları ve site haritası bu adresi kullanır).
 6. Paylaşım kartını denemek için linki WhatsApp'ta kendine gönder.
+7. `vercel.json`'daki zamanlayıcı her gün `/api/keep-alive` adresini çağırır; ücretsiz Supabase projesi bir hafta
+   kullanılmayınca uykuya geçtiği için bu, yaz tatilinde bile sitenin açık kalmasını sağlar. İstersen Vercel'e
+   `CRON_SECRET` adında rastgele bir değer ekle; o zaman bu adresi yalnızca Vercel'in zamanlayıcısı çağırabilir.
+
+## 5. KVKK
+
+- Formlardaki onay kutuları `/kvkk` aydınlatma metnine bağlanır. Metin, kulüp adı ve e-postasıyla otomatik dolan
+  bir şablondur; değiştirmek için **Site Ayarları → Formlar → KVKK aydınlatma metni** alanına yapıştırıp düzenle.
+  Mümkünse üniversitenin hukuk birimine ya da SKS'ye bir göz attırın.
+- Metinde başvuruların 1 yıl içinde silineceği yazıyor. 1 yıldan eski kayıt olunca panelin ana sayfasında
+  **KVKK hatırlatması** çıkar; "Eski kayıtları sil" düğmesiyle temizlenir (otomatik silme yok).
 
 ---
 

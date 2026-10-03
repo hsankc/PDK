@@ -113,6 +113,9 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] SEO: paylaşım görseli, site haritası, robots.txt, manifest, kulüp ve etkinlik yapılandırılmış verisi
 - [x] Erişilebilirlik ve performans: içeriğe atla bağlantısı, odak halkası, "hareketi azalt" desteği,
       ilk görüntünün JS beklemeden çizilmesi, ilk ilan fotoğraflarının öncelikli yüklenmesi
+- [x] KVKK aydınlatma metni (`/kvkk`, panelden düzenlenebilir), form onaylarında bağlantı,
+      panelde 1 yıldan eski başvurular için hatırlatma + temizleme düğmesi
+- [x] Supabase'in uyumaması için günlük Vercel zamanlayıcısı (`/api/keep-alive`)
 - [ ] Yayına alma: Vercel + alan adı (README → "Yayına alma")
 
 ---

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import { INBOX_TABLES, OldRecordsCleanup } from "@/components/admin/OldRecordsCleanup";
 import { getAdminSession } from "@/lib/admin/auth";
 import { mergeSettings } from "@/lib/settings";
 
@@ -18,6 +19,7 @@ export default async function DashboardPage() {
   const { supabase } = await getAdminSession();
   const now = new Date().toISOString();
   const head = { count: "exact" as const, head: true };
+  const yearAgo = oneYearAgo();
 
   const [
     settingsResult,
@@ -44,6 +46,10 @@ export default async function DashboardPage() {
     supabase.from("shelter_locations").select("id", head),
     supabase.from("posts").select("id", head),
   ]);
+  const oldCounts = await Promise.all(
+    INBOX_TABLES.map((table) => supabase.from(table).select("id", head).lt("created_at", yearAgo)),
+  );
+  const oldRecords = oldCounts.reduce((sum, result) => sum + (result.count ?? 0), 0);
   const settings = mergeSettings(settingsResult.data?.data);
 
   const cards = [
@@ -133,6 +139,8 @@ export default async function DashboardPage() {
         })}
       </div>
 
+      <OldRecordsCleanup count={oldRecords} cutoff={yearAgo} />
+
       {doneCount < checklist.length && (
         <section className="card mt-8 p-5 sm:p-7">
           <div className="flex flex-wrap items-end justify-between gap-2">
@@ -173,4 +181,10 @@ export default async function DashboardPage() {
       )}
     </>
   );
+}
+
+function oneYearAgo() {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 1);
+  return date.toISOString();
 }

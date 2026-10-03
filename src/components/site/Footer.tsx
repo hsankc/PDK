@@ -94,9 +94,14 @@ export function Footer({ settings }: { settings: SiteSettings }) {
             <p>
               © {year} {settings.club_name}
             </p>
-            <Link href="/yonetim" className="hover:text-paper">
-              Yönetim
-            </Link>
+            <div className="flex gap-5">
+              <Link href="/kvkk" className="hover:text-paper">
+                KVKK
+              </Link>
+              <Link href="/yonetim" className="hover:text-paper">
+                Yönetim
+              </Link>
+            </div>
           </div>
         </div>
       </div>

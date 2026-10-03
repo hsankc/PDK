@@ -45,6 +45,7 @@ export interface SiteSettings {
   membership_open: boolean;
   membership_intro: string;
   suggestions_intro: string;
+  privacy_text: string;
 
   adoption_intro: string;
   adoption_terms: string;
@@ -123,6 +124,7 @@ export const defaultSettings: SiteSettings = {
   membership_open: true,
   membership_intro: "",
   suggestions_intro: "",
+  privacy_text: "",
 
   adoption_intro: "",
   adoption_terms: "",

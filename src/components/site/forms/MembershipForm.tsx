@@ -1,6 +1,7 @@
 "use client";
 
 import { submitMembership } from "@/app/(site)/actions";
+import { KvkkNote } from "./KvkkNote";
 import { ActionForm, TextArea, TextInput } from "./FormKit";
 
 const grades = [
@@ -76,7 +77,7 @@ export function MembershipForm() {
           <label className="text-ink-soft flex items-start gap-3 text-sm">
             <input type="checkbox" name="consent" required className="accent-brand mt-0.5 size-5 shrink-0" />
             <span>
-              Kişisel verilerimin yalnızca kulüp üyelik başvurusu kapsamında işlenmesini kabul ediyorum.{" "}
+              Kişisel verilerimin yalnızca kulüp üyelik başvurusu kapsamında işlenmesini kabul ediyorum. <KvkkNote />{" "}
               <span className="text-brand">*</span>
               {errors.consent && <span className="text-brand block font-bold">{errors.consent}</span>}
             </span>

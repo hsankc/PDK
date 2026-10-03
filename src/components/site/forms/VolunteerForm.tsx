@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { submitVolunteer } from "@/app/(site)/actions";
+import { KvkkNote } from "./KvkkNote";
 import { housingOptions } from "@/lib/options";
 import { ActionForm, TextArea, TextInput } from "./FormKit";
 
@@ -145,7 +146,7 @@ export function VolunteerForm({ initialKind = "gonullu" }: { initialKind?: Kind 
           <label className="text-ink-soft flex items-start gap-3 text-sm">
             <input type="checkbox" name="consent" required className="accent-brand mt-0.5 size-5 shrink-0" />
             <span>
-              Kişisel verilerimin yalnızca bu başvuru kapsamında işlenmesini kabul ediyorum.{" "}
+              Kişisel verilerimin yalnızca bu başvuru kapsamında işlenmesini kabul ediyorum. <KvkkNote />{" "}
               <span className="text-brand">*</span>
               {errors.consent && <span className="text-brand block font-bold">{errors.consent}</span>}
             </span>

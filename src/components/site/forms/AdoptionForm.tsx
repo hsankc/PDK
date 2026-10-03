@@ -2,6 +2,7 @@
 
 import { submitAdoption } from "@/app/(site)/actions";
 import { housingOptions } from "@/lib/options";
+import { KvkkNote } from "./KvkkNote";
 import { ActionForm, TextArea, TextInput } from "./FormKit";
 
 export function AdoptionForm({ adoptionId, animalName }: { adoptionId: string; animalName: string }) {
@@ -71,7 +72,7 @@ export function AdoptionForm({ adoptionId, animalName }: { adoptionId: string; a
             <input type="checkbox" name="consent" required className="accent-brand mt-0.5 size-5 shrink-0" />
             <span>
               Sahiplendirme şartlarını okudum. Kişisel verilerimin yalnızca bu başvuru kapsamında işlenmesini kabul
-              ediyorum. <span className="text-brand">*</span>
+              ediyorum. <KvkkNote /> <span className="text-brand">*</span>
               {errors.consent && <span className="text-brand block font-bold">{errors.consent}</span>}
             </span>
           </label>

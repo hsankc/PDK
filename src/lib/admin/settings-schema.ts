@@ -100,6 +100,13 @@ export const settingsGroups: SettingsGroup[] = [
       { name: "membership_open", label: "Kulüp başvuruları açık", type: "boolean" },
       { name: "membership_intro", label: "Katılım sayfası açıklaması", type: "textarea", rows: 3 },
       { name: "suggestions_intro", label: "İstek & öneri sayfası açıklaması", type: "textarea", rows: 3 },
+      {
+        name: "privacy_text",
+        label: "KVKK aydınlatma metni",
+        type: "textarea",
+        rows: 8,
+        help: "Boş bırakırsan /kvkk sayfasındaki hazır şablon kullanılır. Değiştirmek istersen oradaki metni kopyalayıp buraya yapıştır ve düzenle; başlık satırlarının başına ## koy, paragrafların arasına boş satır bırak.",
+      },
     ],
   },
   {

@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getPosts("rehber"),
   ]);
 
-  const staticPaths = new Set<string>(["/", "/katil"]);
+  const staticPaths = new Set<string>(["/", "/katil", "/kvkk"]);
   for (const item of navItems) {
     if (isGroup(item)) item.children.forEach((child) => staticPaths.add(child.href));
     else staticPaths.add(item.href);
