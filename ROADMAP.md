@@ -22,9 +22,8 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
   - Saati bilinmeyen etkinliklere tahmini saat yazıldı (çoğu 12:00–14:00); Nehir düzeltebilir.
   - Atlananlar: anma/bayram kutlamaları, çekiliş ve etkileşim paylaşımları, iptal edilen etkinlik.
 - **Panel uçtan uca test edildi:** giriş, kaydetme, düzenleme, resim yükleme (tekli/çoklu/editör içi), 5 form,
-  gelen kutusu (durum + not, otomatik "okundu"), bildirimi ilana çevirme. Silme henüz denenmedi.
-- **TEST kayıtları duruyor** (Hasan görünce silinecek): öneri, üyelik, sahiplenme, kayıp bildirimi,
-  gizli taslak kayıp ilanı, gönüllü/geçici yuva başvurusu.
+  gelen kutusu (durum + not, otomatik "okundu"), bildirimi ilana çevirme, silme.
+- **TEST kayıtları silindi** (03.10.2026, panelin silme düğmesiyle; silme de böylece test edildi).
 - **Nehir'in doldurması gerekenler:**
   - Ekip, anlaşmalı veterinerler.
   - IBAN, borçlar ve ihtiyaç listesi.
@@ -34,8 +33,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - **Kontrol edilecek:**
   - Müjgan hâlâ yuva arıyor mu (Ağustos paylaşımı)?
   - Kampüs kedilerinde Nurcan (Sultanlar) ile Necla (Manifest) aynı kedi mi?
-- **Sıradaki iş:** Yayına alma (Vercel + alan adı). Öncesinde TEST kayıtları silinecek
-  (oyun skor tablosundaki "TEST" skoru dahil).
+- **Sıradaki iş:** Yayına alma (Vercel + alan adı), README → "Yayına alma".
 - **Bekleyenler:**
   - Nehir'in hesabı açılıp yönetici yapılacak.
   - Nehir'e sorulacak:
