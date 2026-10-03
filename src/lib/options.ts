@@ -88,6 +88,20 @@ export const volunteerStatuses: Option[] = [
   { value: "red", label: "Reddedildi" },
 ];
 
+export const factCategoryOptions: Option[] = [
+  { value: "kedi", label: "Kediler" },
+  { value: "kopek", label: "Köpekler" },
+  { value: "genel", label: "Genel" },
+];
+
+export const partnerKindOptions: Option[] = [
+  { value: "kurum", label: "Kurum" },
+  { value: "dernek", label: "Dernek & gönüllü grup" },
+  { value: "kulup", label: "Öğrenci kulübü" },
+  { value: "isletme", label: "İşletme" },
+  { value: "sponsor", label: "Sponsor" },
+];
+
 export function labelOf(options: Option[], value: unknown) {
   return options.find((option) => option.value === value)?.label ?? "";
 }

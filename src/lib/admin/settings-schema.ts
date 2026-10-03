@@ -172,6 +172,23 @@ export const settingsGroups: SettingsGroup[] = [
     ],
   },
   {
+    id: "arsiv",
+    title: "Kampüs kedileri, galeri, tarihçe, destekçiler",
+    fields: [
+      { name: "campus_pets_intro", label: "Kampüs Kedileri sayfası açıklaması", type: "textarea", rows: 2 },
+      { name: "facts_intro", label: "Biliyor musun? sayfası açıklaması", type: "textarea", rows: 2 },
+      { name: "gallery_intro", label: "Pati Galerisi sayfası açıklaması", type: "textarea", rows: 2 },
+      {
+        name: "history_intro",
+        label: "Tarihçe bölümü açıklaması",
+        type: "textarea",
+        rows: 2,
+        help: "Hakkımızda sayfasındaki zaman çizelgesinin üstünde görünür.",
+      },
+      { name: "partners_intro", label: "Destekçilerimiz sayfası açıklaması", type: "textarea", rows: 2 },
+    ],
+  },
+  {
     id: "harita",
     title: "Harita",
     description: "Haritaların ilk açıldığı yer. Kampüsü ya da mahallenizi seçin.",

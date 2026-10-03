@@ -36,28 +36,33 @@ npm run dev
 
 ## 3. Yönetim paneli (Nehir için)
 
-| Menü | Ne işe yarar |
-|---|---|
-| **Özet** | Yeni başvuru ve öneri sayıları + "siteyi hazırlama listesi" |
-| **Site Ayarları** | Kulüp adı, logo, ana sayfa yazıları, sayaçlar, Hakkımızda, iletişim, sosyal medya, duyuru bandı, maskotları açma/kapama |
-| **Yönetim Ekibi** | Ekip üyeleri (fotoğraf, görev, sıra) |
-| **Etkinlikler** | Etkinlikler; en yakın etkinlik ana sayfada geri sayımla görünür |
-| **Sahiplendirme** | Yuva arayan dostlar; sahiplenilince durumu "Yuvasını buldu" yap, "Mutlu sonlar"a geçer |
-| **İyileştirdiklerimiz** | Önce/sonra fotoğrafları ve iyileşme hikâyeleri |
-| **Anlaşmalı Veterinerler** | Klinikler; konum girilirse haritada görünür |
-| **Yuva & Besleme Noktaları** | Haritadaki mama, su, kulübe noktaları. Noktanın yanındaysan "Konumumu kullan" |
-| **Yazı Köşesi** | Blog yazıları; Word benzeri editörle başlık, liste, bağlantı ve resim eklenir |
-| **Rehberler** | "Nasıl yardım ederim?" yazıları; sıra numarasıyla listelenir |
-| **Kayıp & Bulundu** | Sitedeki ilanlar; sahibine kavuşunca durumu "Kavuştu" yap |
-| **Kısırlaştırma** | Planlananlar takvimde, "Yapıldı" olanlar sayaçta görünür |
-| **Projelerimiz** | Projeler, durum ve ilerleme yüzdesi |
-| **Borçlar** | Destek Ol sayfasında şeffaf borç listesi; ödeme yaptıkça "Ödenen"i güncelle |
-| **İhtiyaç Listesi** | Mama, kum, ilaç…; "Acil" ve "Karşılandı" işaretlenebilir |
-| **Üyelik Başvuruları** | "Kulübe Katıl" formundan gelenler; durum ve ekip notu eklenebilir |
-| **Sahiplenme Başvuruları** | İlan sayfalarındaki formdan gelenler |
-| **Kayıp/Bulundu Bildirimleri** | Ziyaretçi bildirimleri; "İlan taslağı oluştur" ile tek tıkla ilana çevrilir |
-| **Gönüllü & Geçici Yuva** | Gönüllü ol formundan gelenler |
-| **İstek & Öneriler** | Öneri köşesinden gelenler; açınca "okundu" olur |
+| Menü                           | Ne işe yarar                                                                                                            |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| **Özet**                       | Yeni başvuru ve öneri sayıları + "siteyi hazırlama listesi"                                                             |
+| **Site Ayarları**              | Kulüp adı, logo, ana sayfa yazıları, sayaçlar, Hakkımızda, iletişim, sosyal medya, duyuru bandı, maskotları açma/kapama |
+| **Yönetim Ekibi**              | Ekip üyeleri (fotoğraf, görev, sıra)                                                                                    |
+| **Etkinlikler**                | Etkinlikler; en yakın etkinlik ana sayfada geri sayımla görünür. Bitince "Etkinlikten fotoğraflar"a kareleri ekle       |
+| **Sahiplendirme**              | Yuva arayan dostlar; sahiplenilince durumu "Yuvasını buldu" yap, "Mutlu sonlar"a geçer                                  |
+| **İyileştirdiklerimiz**        | Önce/sonra fotoğrafları ve iyileşme hikâyeleri                                                                          |
+| **Anlaşmalı Veterinerler**     | Klinikler; konum girilirse haritada görünür                                                                             |
+| **Yuva & Besleme Noktaları**   | Haritadaki mama, su, kulübe noktaları. Noktanın yanındaysan "Konumumu kullan"                                           |
+| **Yazı Köşesi**                | Blog yazıları; Word benzeri editörle başlık, liste, bağlantı ve resim eklenir                                           |
+| **Tarihçe**                    | Hakkımızda sayfasındaki zaman çizelgesi (tarih, başlık, görsel, haber bağlantısı)                                       |
+| **Destekçilerimiz**            | Birlikte çalışılan kurum, kulüp ve işletmeler                                                                           |
+| **Kampüs Kedileri**            | Kampüsün yerlileri: lakap, burç, karakter, fotoğraflar                                                                  |
+| **Pati Galerisi**              | Üyelerden ve takipçilerden gelen fotoğraflar; aynı albüm adı sitede filtre olur                                         |
+| **Biliyor musun?**             | Kısa bilgiler; ana sayfada her gün biri "Günün bilgisi" olur                                                            |
+| **Rehberler**                  | "Nasıl yardım ederim?" yazıları; sıra numarasıyla listelenir                                                            |
+| **Kayıp & Bulundu**            | Sitedeki ilanlar; sahibine kavuşunca durumu "Kavuştu" yap                                                               |
+| **Kısırlaştırma**              | Planlananlar takvimde, "Yapıldı" olanlar sayaçta görünür                                                                |
+| **Projelerimiz**               | Projeler, durum ve ilerleme yüzdesi                                                                                     |
+| **Borçlar**                    | Destek Ol sayfasında şeffaf borç listesi; ödeme yaptıkça "Ödenen"i güncelle                                             |
+| **İhtiyaç Listesi**            | Mama, kum, ilaç…; "Acil" ve "Karşılandı" işaretlenebilir                                                                |
+| **Üyelik Başvuruları**         | "Kulübe Katıl" formundan gelenler; durum ve ekip notu eklenebilir                                                       |
+| **Sahiplenme Başvuruları**     | İlan sayfalarındaki formdan gelenler                                                                                    |
+| **Kayıp/Bulundu Bildirimleri** | Ziyaretçi bildirimleri; "İlan taslağı oluştur" ile tek tıkla ilana çevrilir                                             |
+| **Gönüllü & Geçici Yuva**      | Gönüllü ol formundan gelenler                                                                                           |
+| **İstek & Öneriler**           | Öneri köşesinden gelenler; açınca "okundu" olur                                                                         |
 
 - Fotoğraflar yüklenirken otomatik küçültülür, telefondan çekilen büyük fotoğraflar sorun olmaz.
 - Paragrafları ayırmak için araya **boş satır** bırak.

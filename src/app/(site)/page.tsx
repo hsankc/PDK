@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, Heart, MapPin, TriangleAlert } from "lucide-react";
+import { ArrowRight, CalendarDays, Heart, Lightbulb, MapPin, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { CatFace } from "@/components/pets/CatFace";
 import { HeroPets } from "@/components/pets/HeroPets";
@@ -13,19 +13,21 @@ import { TeamCard } from "@/components/site/TeamCard";
 import {
   getAdoptions,
   getDebts,
+  getFactOfTheDay,
   getNeeds,
   getNextEvent,
   getPosts,
   getTeamMembers,
   summarizeDebts,
   type ClubEvent,
+  type Fact,
   type Need,
 } from "@/lib/data";
 import { dateParts, formatDate, formatMoney } from "@/lib/format";
 import { getSettings, paragraphs, type SiteSettings } from "@/lib/settings";
 
 export default async function HomePage() {
-  const [settings, nextEvent, team, adoptions, debts, needs, posts] = await Promise.all([
+  const [settings, nextEvent, team, adoptions, debts, needs, posts, fact] = await Promise.all([
     getSettings(),
     getNextEvent(),
     getTeamMembers(),
@@ -33,6 +35,7 @@ export default async function HomePage() {
     getDebts(),
     getNeeds(),
     getPosts("yazi", 3),
+    getFactOfTheDay(),
   ]);
   const aboutFirstParagraph = paragraphs(settings.about_text)[0];
   const waiting = adoptions.filter((animal) => animal.status === "sahiplendirilebilir");
@@ -46,6 +49,8 @@ export default async function HomePage() {
       {settings.stats.length > 0 && <Stats stats={settings.stats} />}
 
       {nextEvent && <NextEvent event={nextEvent} />}
+
+      {fact && <FactOfTheDay fact={fact} />}
 
       {waiting.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
@@ -263,6 +268,28 @@ function NextEvent({ event }: { event: ClubEvent }) {
               Tüm etkinlikler <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function FactOfTheDay({ fact }: { fact: Fact }) {
+  return (
+    <section className="mx-auto max-w-6xl px-4 pt-4 pb-4 sm:px-6">
+      <Reveal>
+        <div className="card bg-ink text-paper shadow-hard-red relative flex flex-col gap-5 overflow-hidden p-6 sm:flex-row sm:items-center sm:p-8">
+          <span className="bg-brand border-paper grid size-16 shrink-0 -rotate-6 place-items-center rounded-2xl border-2">
+            <Lightbulb className="size-8" aria-hidden="true" />
+          </span>
+          <div className="flex-1">
+            <p className="text-brand text-sm font-extrabold tracking-wider uppercase">Günün bilgisi</p>
+            <p className="font-display mt-1 text-2xl leading-tight font-extrabold sm:text-3xl">{fact.title}</p>
+            {fact.body && <p className="text-paper/80 mt-2">{fact.body}</p>}
+          </div>
+          <Link href="/biliyor-musun" className="btn btn-white btn-sm shrink-0 self-start sm:self-center">
+            Daha fazlası <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
         </div>
       </Reveal>
     </section>

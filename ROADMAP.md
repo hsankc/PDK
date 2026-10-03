@@ -9,19 +9,30 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 ---
 
 ## 📌 Kaldığımız yer (03.10.2026)
-- **Bitti:** Faz 0–4. Supabase bağlı, `0001`–`0004` çalıştırıldı, `npm run check:live` yeşil.
-- **İçerik Instagram'dan aktarıldı** (@patilidostlar_kulubu), panelin kendi formlarıyla:
-  - Site ayarları, logo, Hakkımızda; 1 etkinlik (3 Ekim okey); Müjgan ilanı; PatiZone projesi; 4 rehber; 5 yazı.
+
+- **Bitti:** Faz 0–4 + Arşiv bölümleri. Supabase bağlı, `0001`–`0005` çalıştırıldı, `npm run check:live` yeşil.
+- **Instagram'ın tamamı aktarıldı** (@patilidostlar_kulubu, 2022–2026, 218 paylaşım):
+  - İlk tur: site ayarları, logo, Hakkımızda, 3 Ekim okey, Müjgan, PatiZone, 4 rehber, 5 yazı.
+  - İkinci tur: 49 geçmiş etkinlik (duyuru + fotoğraflar birleştirildi) + 13–14 Ekim stant günleri, 29 "Biliyor musun?" bilgisi,
+    19 kampüs dostu, 56 galeri fotoğrafı, 16 tarihçe maddesi, 32 destekçi, 4 kurtarma hikâyesi
+    (Dori, Teoman, Rocky, Tahin), 8 rehber, 1 yazı (6 Şubat), Pati Operasyonu projesi,
+    6 harita noktası, sayaçlar ve harita merkezi.
+  - Eski sahiplendirme ilanları (4 adet) **gizli taslak** olarak eklendi; güncelse Nehir yayına alır.
+  - Saati bilinmeyen etkinliklere tahmini saat yazıldı (çoğu 12:00–14:00); Nehir düzeltebilir.
+  - Atlananlar: anma/bayram kutlamaları, çekiliş ve etkileşim paylaşımları, iptal edilen etkinlik.
 - **Panel uçtan uca test edildi:** giriş, kaydetme, düzenleme, resim yükleme (tekli/çoklu/editör içi), 5 form,
   gelen kutusu (durum + not, otomatik "okundu"), bildirimi ilana çevirme. Silme henüz denenmedi.
 - **TEST kayıtları duruyor** (Hasan görünce silinecek): öneri, üyelik, sahiplenme, kayıp bildirimi,
   gizli taslak kayıp ilanı, gönüllü/geçici yuva başvurusu.
 - **Nehir'in doldurması gerekenler:**
-  - Ekip, anlaşmalı veterinerler, besleme noktaları.
-  - IBAN, borçlar ve ihtiyaç listesi, sayaçlar.
-  - Misyon/vizyon, iletişim bilgileri, harita merkezi.
+  - Ekip, anlaşmalı veterinerler.
+  - IBAN, borçlar ve ihtiyaç listesi.
+  - Misyon/vizyon, iletişim bilgileri.
+  - Pati Operasyonu'nun ilerleme yüzdesi (şimdilik %0).
   - Logoyu yüksek çözünürlüklü orijinal dosyayla değiştirmek (Instagram'daki 150 px).
-- **Kontrol edilecek:** Müjgan hâlâ yuva arıyor mu (Ağustos paylaşımı)?
+- **Kontrol edilecek:**
+  - Müjgan hâlâ yuva arıyor mu (Ağustos paylaşımı)?
+  - Kampüs kedilerinde Nurcan (Sultanlar) ile Necla (Manifest) aynı kedi mi?
 - **Sıradaki iş:** Faz 5: mini oyunlar, gizli pati avı, karanlık mod, SEO, yayına alma.
 - **Bekleyenler:**
   - Nehir'in hesabı açılıp yönetici yapılacak.
@@ -33,6 +44,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 ---
 
 ## Faz 0 — Altyapı ve Yönetim Paneli ✅
+
 - [x] Proje kurulumu (Next.js, Tailwind, Motion, Supabase)
 - [x] Tema: kırmızı/siyah/beyaz, fontlar, ortak bileşenler
 - [x] Site iskeleti: üst menü, mobil menü, alt bilgi, duyuru bandı, 404 sayfası
@@ -43,6 +55,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] Animasyonlu maskotlar: köşeden bakan kedi/köpek, altta yürüyen kedi, tıklayınca pati izi (panelden kapatılabilir)
 
 ## Faz 1 — Kulübü Tanıtma ✅
+
 - [x] Ana sayfa: giriş alanı, animasyonlu sayaçlar, yaklaşan etkinliğe geri sayım
 - [x] Hakkımızda (misyon, vizyon)
 - [x] Yönetim ekibi tanıtımı
@@ -52,6 +65,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] Panel: ekip, etkinlikler, üyelik başvuruları, öneriler
 
 ## Faz 2 — Patili Dostlarımız ✅
+
 - [x] Sahiplendirme ilanları (tür/yaş/cinsiyet filtresi, galeri, "Mutlu sonlar") + sahiplenme başvuru formu
 - [x] İyileştirdiklerimiz (sürgülü önce/sonra karşılaştırma, iyileşme hikâyesi)
 - [x] Anlaşmalı veterinerler (indirim, acil, telefon, yol tarifi, harita)
@@ -61,6 +75,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] Menüde "Kulüp" ve "Patili Dostlar" açılır menüleri
 
 ## Faz 3 — Şeffaflık ve Projeler ✅
+
 - [x] Destek Ol sayfası: güncel borç, ödenen/kalan, animasyonlu ilerleme çubuğu, fatura fotoğrafları
 - [x] Bağış kartı: IBAN kopyalama (Instagram tarayıcısı için yedek yöntemle), QR kod, alıcı ve banka
 - [x] İhtiyaç listesi (acil / karşılandı işaretleri)
@@ -70,6 +85,7 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] Menüde "Çalışmalarımız" ve öne çıkan "Destek Ol"; ana sayfada destek çağrısı
 
 ## Faz 4 — İçerik ve Rehberler ✅
+
 - [x] Yazı köşesi: Word benzeri editör (başlık, kalın, liste, alıntı, bağlantı, resim), kategori, okuma süresi, paylaş düğmeleri
 - [x] Rehberler ("Nasıl Yardım Ederim?"): numaralı rehber listesi, aynı editör
 - [x] Web adresleri başlıktan otomatik (Türkçe harfler dönüştürülür)
@@ -78,7 +94,18 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 - [x] Gönüllü ol & geçici yuva başvuru formu
 - [x] Güvenlik: yazılar HTML değil JSON olarak saklanır; zararlı bağlantı/resim sitede çizilmez
 
+## Arşiv Bölümleri (Instagram aktarımıyla eklendi) ✅
+
+- [x] Etkinlik arşivi: geçmiş etkinlikler yıllara göre, her etkinliğe fotoğraf galerisi ve detay sayfası
+- [x] Kampüs Kedileri: lakap, burç, en sevdiği köşe, karakter, fotoğraflar
+- [x] Biliyor musun?: çevrilen bilgi kartları, konu filtresi, karıştır; ana sayfada "Günün bilgisi"
+- [x] Pati Galerisi: taşlı duvar, albüm filtresi, tam ekran görüntüleyici
+- [x] Tarihçe: Hakkımızda sayfasında zaman çizelgesi
+- [x] Destekçilerimiz: kurum, dernek, kulüp, işletme ve sponsorlar
+- [x] Menüde "Keşfet" açılır menüsü
+
 ## Faz 5 — Eğlence ve Cila ⏳
+
 - [ ] Mini oyunlar: Mama Yakala, Hafıza Kartları (+ skor tablosu)
 - [ ] Gizli pati avı (sayfalara saklanmış patileri bulana sürpriz)
 - [ ] Karanlık mod
@@ -89,9 +116,11 @@ Durum işaretleri: ✅ bitti · 🚧 sürüyor · ⏳ sırada
 ---
 
 ## Supabase
+
 - Her yeni fazın SQL dosyası önce `npm run check:sql` ile bilgisayarda (PGlite) test edilir,
   sonra Supabase SQL Editor'de çalıştırılır.
 - Canlı veritabanının izinleri `npm run check:live` ile ziyaretçi gözüyle kontrol edilir (veri yazmaz).
 
 ## Kurulum
+
 Ayrıntılar: [README.md](README.md)

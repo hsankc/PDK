@@ -76,7 +76,12 @@ export type ResourceIcon =
   | "book-open"
   | "search"
   | "megaphone"
-  | "hand-helping";
+  | "hand-helping"
+  | "cat"
+  | "lightbulb"
+  | "images"
+  | "history"
+  | "handshake";
 
 export interface ResourceConfig {
   /** Panel adresi: /yonetim/<slug> */

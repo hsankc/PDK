@@ -68,6 +68,12 @@ export interface SiteSettings {
   volunteer_intro: string;
   volunteer_open: boolean;
 
+  campus_pets_intro: string;
+  facts_intro: string;
+  gallery_intro: string;
+  history_intro: string;
+  partners_intro: string;
+
   map_center: LatLng | null;
   map_zoom: number;
 
@@ -135,6 +141,12 @@ export const defaultSettings: SiteSettings = {
   lost_found_intro: "",
   volunteer_intro: "",
   volunteer_open: true,
+
+  campus_pets_intro: "",
+  facts_intro: "",
+  gallery_intro: "",
+  history_intro: "",
+  partners_intro: "",
 
   map_center: null,
   map_zoom: 15,

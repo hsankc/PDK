@@ -44,6 +44,11 @@ const publicTables = [
   "neuter_records",
   "posts",
   "lost_found",
+  "campus_pets",
+  "facts",
+  "gallery_photos",
+  "milestones",
+  "partners",
 ];
 for (const table of publicTables) {
   const { data, error } = await supabase.from(table).select("*").limit(1);

@@ -306,5 +306,70 @@ await expectError(
 await expectRows(admin, "veteriner silinince kayıt kalır", "delete from vets where name = 'Can Veteriner'", 1);
 await expectRows(admin, "…ve veteriner bağlantısı boşalır", "select 1 from neuter_records where vet_id is null", 1);
 
+console.log("\nArşiv — etkinlik galerisi, kampüs kedileri, bilgiler, galeri, tarihçe, destekçiler");
+await expectRows(
+  admin,
+  "etkinliğe fotoğraf galerisi eklenir",
+  "update events set photos = array['a.jpg', 'b.jpg'] where title = 'Mama günü'",
+  1,
+);
+await expectRows(anon, "ziyaretçi galeriyi görür", "select 1 from events where array_length(photos, 1) = 2", 1);
+await expectRows(
+  admin,
+  "yönetici kampüs kedisi ekler",
+  "insert into campus_pets (name, title, zodiac) values ('Patron', 'Takımın kaptanı', 'Aslan'), ('Gizli kedi', null, null)",
+  2,
+);
+await expectRows(
+  admin,
+  "bir kediyi gizler",
+  "update campus_pets set is_published = false where name = 'Gizli kedi'",
+  1,
+);
+await expectRows(anon, "ziyaretçi sadece yayındaki kediyi görür", "select * from campus_pets", 1);
+await expectRows(
+  admin,
+  "yönetici bilgi ekler",
+  "insert into facts (title, category) values ('Kediler rüya görür', 'kedi')",
+  1,
+);
+await expectError(
+  admin,
+  "geçersiz bilgi konusu reddedilir",
+  "insert into facts (title, category) values ('x', 'balik')",
+);
+await expectRows(
+  admin,
+  "yönetici galeriye fotoğraf ekler",
+  "insert into gallery_photos (image_url, credit) values ('p.jpg', 'Bir takipçi')",
+  1,
+);
+await expectError(admin, "resimsiz galeri kaydı reddedilir", "insert into gallery_photos (caption) values ('x')");
+await expectRows(
+  admin,
+  "yönetici kilometre taşı ekler",
+  "insert into milestones (happened_on, title) values ('2022-03-06', 'İlk tanışma')",
+  1,
+);
+await expectError(admin, "tarihsiz kilometre taşı reddedilir", "insert into milestones (title) values ('x')");
+await expectRows(
+  admin,
+  "yönetici destekçi ekler",
+  "insert into partners (name, kind) values ('Mor Pati Derneği', 'dernek')",
+  1,
+);
+await expectError(
+  admin,
+  "geçersiz destekçi türü reddedilir",
+  "insert into partners (name, kind) values ('x', 'banka')",
+);
+await expectRows(anon, "ziyaretçi destekçiyi görür", "select * from partners", 1);
+await expectError(anon, "ziyaretçi galeriye ekleyemez", "insert into gallery_photos (image_url) values ('x.jpg')");
+await expectError(
+  member,
+  "üye tarihçeye ekleyemez",
+  "insert into milestones (happened_on, title) values ('2020-01-01', 'x')",
+);
+
 console.log(failures ? `\n${failures} test başarısız.` : "\nTüm testler geçti.");
 process.exit(failures ? 1 : 0);

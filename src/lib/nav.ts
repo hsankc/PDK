@@ -13,10 +13,11 @@ export const navItems: NavEntry[] = [
   {
     label: "Kulüp",
     children: [
-      { href: "/hakkimizda", label: "Hakkımızda", description: "Biz kimiz, ne yapıyoruz" },
+      { href: "/hakkimizda", label: "Hakkımızda", description: "Biz kimiz, tarihçemiz" },
       { href: "/ekibimiz", label: "Ekibimiz", description: "Yönetim kurulu" },
       { href: "/etkinlikler", label: "Etkinlikler", description: "Takvim ve geri sayım" },
       { href: "/yazilar", label: "Yazı Köşesi", description: "Haberler, anılar, hikâyeler" },
+      { href: "/destekcilerimiz", label: "Destekçilerimiz", description: "Birlikte çalıştığımız dostlar" },
       { href: "/gonullu", label: "Gönüllü Ol & Geçici Yuva", description: "Üye olmadan da destek ol" },
       { href: "/oneri", label: "İstek & Öneri", description: "Bize yaz, isimsiz de olur" },
     ],
@@ -30,6 +31,14 @@ export const navItems: NavEntry[] = [
       { href: "/yuvalar", label: "Yuva & Besleme Noktaları", description: "Haritada mama ve su noktaları" },
       { href: "/veterinerler", label: "Anlaşmalı Veterinerler", description: "Klinikler ve iletişim" },
       { href: "/rehberler", label: "Nasıl Yardım Ederim?", description: "Adım adım rehberler" },
+    ],
+  },
+  {
+    label: "Keşfet",
+    children: [
+      { href: "/kampus-kedileri", label: "Kampüs Kedileri", description: "Kampüsün yerlileriyle tanış" },
+      { href: "/galeri", label: "Pati Galerisi", description: "Sizden gelen kareler" },
+      { href: "/biliyor-musun", label: "Biliyor musun?", description: "Kediler ve köpekler hakkında" },
     ],
   },
   {

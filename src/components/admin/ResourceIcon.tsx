@@ -1,12 +1,17 @@
 import {
   BookOpen,
   CalendarDays,
+  Cat,
   FolderKanban,
   HandHeart,
   HandHelping,
+  Handshake,
   Heart,
   HeartPulse,
+  History,
   IdCard,
+  Images,
+  Lightbulb,
   ListChecks,
   MapPin,
   Megaphone,
@@ -39,6 +44,11 @@ const icons = {
   search: Search,
   megaphone: Megaphone,
   "hand-helping": HandHelping,
+  cat: Cat,
+  lightbulb: Lightbulb,
+  images: Images,
+  history: History,
+  handshake: Handshake,
 } satisfies Record<IconName, unknown>;
 
 export function ResourceIcon({ name, className }: { name: IconName; className?: string }) {

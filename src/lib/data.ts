@@ -1,3 +1,4 @@
+import { todayInIstanbul } from "@/lib/format";
 import { getPublicClient } from "@/lib/supabase/public";
 
 export type TeamMember = {
@@ -21,6 +22,7 @@ export type ClubEvent = {
   ends_at: string | null;
   cover_url: string | null;
   registration_url: string | null;
+  photos: string[];
 };
 
 export type Adoption = {
@@ -172,7 +174,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
   return data ?? [];
 }
 
-const EVENT_COLUMNS = "id, title, description, location, starts_at, ends_at, cover_url, registration_url";
+const EVENT_COLUMNS = "id, title, description, location, starts_at, ends_at, cover_url, registration_url, photos";
 
 export async function getEvents(): Promise<ClubEvent[]> {
   const supabase = await getPublicClient();
@@ -186,11 +188,30 @@ export async function getEvents(): Promise<ClubEvent[]> {
   return data ?? [];
 }
 
+export async function getEvent(id: string): Promise<ClubEvent | null> {
+  if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
+  const supabase = await getPublicClient();
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from("events")
+    .select(EVENT_COLUMNS)
+    .eq("id", id)
+    .eq("is_published", true)
+    .maybeSingle();
+  logError("Etkinlik", error);
+  return data;
+}
+
+/** Bitiş saati (yoksa başlangıcı) geçmiş etkinlik "geçmiş" sayılır. */
+export function isEventPast(event: Pick<ClubEvent, "starts_at" | "ends_at">, now = Date.now()) {
+  return new Date(event.ends_at ?? event.starts_at).getTime() < now;
+}
+
 /** Etkinlikleri yaklaşan / geçmiş diye ayırır. Bitiş saati geçmeyen etkinlik "yaklaşan" sayılır. */
 export async function getEventTimeline() {
   const events = await getEvents();
   const now = Date.now();
-  const isPast = (event: ClubEvent) => new Date(event.ends_at ?? event.starts_at).getTime() < now;
+  const isPast = (event: ClubEvent) => isEventPast(event, now);
 
   const upcoming = events.filter((event) => !isPast(event));
   return {
@@ -451,4 +472,127 @@ export async function getNextEvent(): Promise<ClubEvent | null> {
     .maybeSingle();
   logError("Sıradaki etkinlik", error);
   return data;
+}
+
+// --------------------------------------------------------------- Arşiv
+
+export type CampusPet = {
+  id: string;
+  name: string;
+  species: string;
+  title: string | null;
+  personality: string | null;
+  zodiac: string | null;
+  favorite_spot: string | null;
+  photo_url: string | null;
+  photos: string[];
+};
+
+export type Fact = {
+  id: string;
+  title: string;
+  body: string | null;
+  category: "kedi" | "kopek" | "genel";
+  image_url: string | null;
+};
+
+export type GalleryPhoto = {
+  id: string;
+  image_url: string;
+  caption: string | null;
+  credit: string | null;
+  album: string | null;
+  taken_on: string | null;
+};
+
+export type Milestone = {
+  id: string;
+  happened_on: string;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  link_url: string | null;
+};
+
+export type Partner = {
+  id: string;
+  name: string;
+  kind: string;
+  description: string | null;
+  instagram_url: string | null;
+  website_url: string | null;
+  logo_url: string | null;
+};
+
+export async function getCampusPets(): Promise<CampusPet[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("campus_pets")
+    .select("id, name, species, title, personality, zodiac, favorite_spot, photo_url, photos")
+    .eq("is_published", true)
+    .order("sort_order", { ascending: true })
+    .order("name", { ascending: true });
+  logError("Kampüs kedileri", error);
+  return data ?? [];
+}
+
+export async function getFacts(): Promise<Fact[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("facts")
+    .select("id, title, body, category, image_url")
+    .eq("is_published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+  logError("Bilgiler", error);
+  return (data ?? []) as Fact[];
+}
+
+/** Her gün (İstanbul saatiyle) sıradaki bilgi; liste bitince başa döner. */
+export async function getFactOfTheDay(): Promise<Fact | null> {
+  const facts = await getFacts();
+  if (!facts.length) return null;
+  const day = Math.floor(new Date(`${todayInIstanbul()}T00:00:00Z`).getTime() / 86_400_000);
+  return facts[day % facts.length];
+}
+
+export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("gallery_photos")
+    .select("id, image_url, caption, credit, album, taken_on")
+    .eq("is_published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false })
+    .limit(500);
+  logError("Galeri", error);
+  return data ?? [];
+}
+
+export async function getMilestones(): Promise<Milestone[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("milestones")
+    .select("id, happened_on, title, description, image_url, link_url")
+    .eq("is_published", true)
+    .order("happened_on", { ascending: true });
+  logError("Tarihçe", error);
+  return data ?? [];
+}
+
+export async function getPartners(): Promise<Partner[]> {
+  const supabase = await getPublicClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("partners")
+    .select("id, name, kind, description, instagram_url, website_url, logo_url")
+    .eq("is_published", true)
+    .order("sort_order", { ascending: true })
+    .order("name", { ascending: true });
+  logError("Destekçiler", error);
+  return data ?? [];
 }
