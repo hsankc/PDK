@@ -4,16 +4,8 @@ import { Loader2, ShieldCheck, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { INBOX_TABLES } from "@/lib/admin/inbox";
 import { createClient } from "@/lib/supabase/client";
-
-/** Formlardan gelen kayıtlar: KVKK metninde 1 yıl içinde silineceğini söylüyoruz. */
-export const INBOX_TABLES = [
-  "membership_applications",
-  "adoption_applications",
-  "volunteer_applications",
-  "lost_found_reports",
-  "suggestions",
-] as const;
 
 /** 1 yıldan eski başvuru ve mesajlar varsa hatırlatır, onay alınca siler. */
 export function OldRecordsCleanup({ count, cutoff }: { count: number; cutoff: string }) {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Baloo_2, Nunito } from "next/font/google";
-import { themeScript } from "@/components/site/ThemeToggle";
+import { themeScript } from "@/lib/theme";
 import { getSettings } from "@/lib/settings";
 import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";

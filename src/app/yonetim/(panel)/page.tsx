@@ -11,7 +11,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { INBOX_TABLES, OldRecordsCleanup } from "@/components/admin/OldRecordsCleanup";
+import { OldRecordsCleanup } from "@/components/admin/OldRecordsCleanup";
+import { INBOX_TABLES } from "@/lib/admin/inbox";
 import { getAdminSession } from "@/lib/admin/auth";
 import { mergeSettings } from "@/lib/settings";
 

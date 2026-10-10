@@ -2,11 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
-
-export const THEME_KEY = "pdk-tema";
-
-/** <head> içinde, sayfa çizilmeden önce çalışır: kayıtlı tercih yoksa cihazın temasını kullanır. */
-export const themeScript = `(function(){try{var t=localStorage.getItem("${THEME_KEY}");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()`;
+import { THEME_KEY } from "@/lib/theme";
 
 function subscribe(callback: () => void) {
   const observer = new MutationObserver(callback);
