@@ -67,18 +67,18 @@ export function Navbar({ clubName, shortName, logoUrl, membershipOpen }: Props) 
           scrolled ? "border-ink" : "border-transparent"
         }`}
       >
-        <div className="mx-auto flex h-18 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-          <Link href="/" className="group flex min-w-0 items-center gap-3">
+        <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+          <Link href="/" className="group flex shrink-0 items-center gap-3">
             <motion.span whileHover={{ rotate: -12, scale: 1.08 }} transition={{ type: "spring", stiffness: 300 }}>
               <LogoMark logoUrl={logoUrl} />
             </motion.span>
-            <span className="font-display truncate text-lg leading-tight font-extrabold">
+            <span className="font-display text-lg leading-tight font-extrabold lg:max-w-[8.5rem] xl:max-w-none">
               <span className="hidden sm:inline">{clubName}</span>
               <span className="sm:hidden">{shortName || clubName}</span>
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Ana menü">
+          <nav className="hidden items-center gap-0.5 lg:flex xl:gap-1" aria-label="Ana menü">
             {navItems.map((item) =>
               isGroup(item) ? (
                 <Dropdown
@@ -93,8 +93,8 @@ export function Navbar({ clubName, shortName, logoUrl, membershipOpen }: Props) 
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`font-display relative items-center gap-1.5 rounded-full px-3.5 py-2 font-bold transition-colors ${
-                    item.href === "/" ? "hidden xl:flex" : "flex"
+                  className={`font-display relative items-center gap-1.5 rounded-full px-2.5 py-2 font-bold whitespace-nowrap transition-colors xl:px-3.5 ${
+                    item.href === "/" ? "hidden 2xl:flex" : "flex"
                   } ${item.href === SUPPORT_HREF ? "text-brand hover:text-brand-dark" : "text-ink-soft hover:text-ink"}`}
                 >
                   {isActive(item.href) && <ActivePill />}
@@ -108,7 +108,10 @@ export function Navbar({ clubName, shortName, logoUrl, membershipOpen }: Props) 
           <div className="flex items-center gap-2">
             <ThemeToggle />
             {membershipOpen && (
-              <Link href="/katil" className="btn btn-red btn-sm hidden sm:inline-flex">
+              <Link
+                href="/katil"
+                className="btn btn-red btn-sm hidden whitespace-nowrap sm:inline-flex lg:hidden xl:inline-flex"
+              >
                 Kulübe Katıl
               </Link>
             )}
@@ -251,7 +254,7 @@ function Dropdown({
           else onOpenChange(!open);
         }}
         aria-expanded={open}
-        className="font-display text-ink-soft hover:text-ink relative flex items-center gap-1 rounded-full px-3.5 py-2 font-bold transition-colors"
+        className="font-display text-ink-soft hover:text-ink relative flex items-center gap-1 rounded-full px-2.5 py-2 font-bold whitespace-nowrap transition-colors xl:px-3.5"
       >
         {active && <ActivePill />}
         <span className={`relative ${active ? "text-brand" : ""}`}>{group.label}</span>
