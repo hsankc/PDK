@@ -20,6 +20,8 @@ export function Navbar({ clubName, shortName, logoUrl, membershipOpen }: Props) 
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
+  // Mobil menüde açık olan grup (akordeon; aynı anda tek grup)
+  const [mobileGroup, setMobileGroup] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
 
   // Sayfa değişince menüleri kapat
@@ -117,7 +119,11 @@ export function Navbar({ clubName, shortName, logoUrl, membershipOpen }: Props) 
             )}
             <button
               type="button"
-              onClick={() => setOpen((value) => !value)}
+              onClick={() => {
+                // Menü açılırken bulunulan sayfanın grubu açık gelsin
+                setMobileGroup(navItems.find((item) => isGroup(item) && isGroupActive(item))?.label ?? null);
+                setOpen((value) => !value);
+              }}
               className="border-ink bg-paper grid size-11 place-items-center rounded-full border-2 lg:hidden"
               aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
               aria-expanded={open}
@@ -147,17 +153,38 @@ export function Navbar({ clubName, shortName, logoUrl, membershipOpen }: Props) 
                   transition={{ delay: 0.04 * index }}
                 >
                   {isGroup(item) ? (
-                    <div className="py-2">
-                      <p className="text-ink/50 px-5 pb-1 text-xs font-extrabold tracking-widest uppercase">
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => setMobileGroup((current) => (current === item.label ? null : item.label))}
+                        aria-expanded={mobileGroup === item.label}
+                        className={`font-display flex w-full items-center justify-between gap-3 rounded-2xl px-5 py-3.5 text-left text-2xl font-extrabold ${
+                          isGroupActive(item) ? "text-brand" : ""
+                        }`}
+                      >
                         {item.label}
-                      </p>
-                      <ul>
-                        {item.children.map((child) => (
-                          <li key={child.href}>
-                            <MobileLink href={child.href} label={child.label} active={isActive(child.href)} small />
-                          </li>
-                        ))}
-                      </ul>
+                        <ChevronDown
+                          className={`size-6 shrink-0 transition-transform ${mobileGroup === item.label ? "rotate-180" : ""}`}
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {mobileGroup === item.label && (
+                          <motion.ul
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="border-ink/15 ml-5 overflow-hidden border-l-2 pl-2"
+                          >
+                            {item.children.map((child) => (
+                              <li key={child.href}>
+                                <MobileLink href={child.href} label={child.label} active={isActive(child.href)} small />
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
                     </div>
                   ) : (
                     <MobileLink href={item.href} label={item.label} active={isActive(item.href)} />
