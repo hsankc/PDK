@@ -184,7 +184,7 @@ function Hero({ settings }: { settings: SiteSettings }) {
 
   return (
     <section className="bg-paws relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-10 pb-16 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:pt-16 lg:pb-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-10 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:pt-16 lg:pb-24">
         <div className="animate-rise">
           {settings.hero_badge && (
             <p className="sticker shadow-hard-sm mb-6 -rotate-2">
@@ -335,7 +335,7 @@ function NextEvent({ event }: { event: ClubEvent }) {
   return (
     <>
       <Reveal>
-        <div className="card grid overflow-hidden md:grid-cols-[0.9fr_1.4fr]">
+        <div className="card grid overflow-hidden md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)]">
           <div className="border-ink bg-brand relative min-h-56 border-b-2 md:border-r-2 md:border-b-0">
             {event.cover_url ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -415,7 +415,7 @@ function SupportTeaser({
 }) {
   return (
     <section className="mx-auto max-w-6xl px-4 pt-20 sm:px-6">
-      <Reveal className="card grid gap-8 p-6 sm:p-10 md:grid-cols-[1.2fr_1fr] md:items-center">
+      <Reveal className="card grid gap-8 p-6 sm:p-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-center">
         <div>
           <p className="sticker bg-brand text-paper mb-4 -rotate-2">Desteğine ihtiyacımız var</p>
           {remaining > 0 ? (

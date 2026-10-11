@@ -59,7 +59,9 @@ export default async function EventPage({ params }: PageProps<"/etkinlikler/[id]
         <ArrowLeft className="size-4" aria-hidden="true" /> Tüm etkinlikler
       </Link>
 
-      <div className={`grid gap-10 ${event.cover_url ? "lg:grid-cols-[1.3fr_1fr]" : ""}`}>
+      <div
+        className={`grid grid-cols-1 gap-10 ${event.cover_url ? "lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]" : ""}`}
+      >
         <Reveal>
           <p className={`sticker shadow-hard-sm mb-4 -rotate-2 ${past ? "bg-ink text-paper" : "bg-brand text-paper"}`}>
             {past ? "Geçmiş etkinlik" : "Yaklaşan etkinlik"}

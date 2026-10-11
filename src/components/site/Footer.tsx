@@ -25,7 +25,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
       {settings.pets_enabled && <WalkingCat />}
 
       <div className="bg-paws-light">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1fr]">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
               <LogoMark logoUrl={settings.logo_url} className="size-14" />

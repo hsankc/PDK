@@ -28,7 +28,9 @@ export default async function AboutPage() {
         {!hasContent && <EmptyState title="Bu sayfa yakında dolacak">Kulübümüzü anlatan yazı hazırlanıyor.</EmptyState>}
 
         {text.length > 0 && (
-          <Reveal className={`grid gap-12 ${settings.about_image_url ? "lg:grid-cols-[1.3fr_1fr]" : ""}`}>
+          <Reveal
+            className={`grid grid-cols-1 gap-12 ${settings.about_image_url ? "lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]" : ""}`}
+          >
             <div className="prose-club max-w-3xl">
               {text.map((paragraph, index) => (
                 <p key={index} className={index === 0 ? "text-ink text-xl font-bold" : ""}>
@@ -106,7 +108,9 @@ function MilestoneItem({ milestone, index }: { milestone: Milestone; index: numb
         }`}
         aria-hidden="true"
       />
-      <Reveal className={`grid gap-5 ${milestone.image_url ? "md:grid-cols-[1.4fr_1fr]" : ""}`}>
+      <Reveal
+        className={`grid grid-cols-1 gap-5 ${milestone.image_url ? "md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]" : ""}`}
+      >
         <div>
           <p className="text-brand font-display text-lg font-extrabold">
             {formatDay(milestone.happened_on, { day: undefined })}

@@ -17,7 +17,7 @@ export function PostCard({ post, featured = false }: { post: Post; featured?: bo
     <Link
       href={postHref(post)}
       className={`card group grid h-full overflow-hidden transition-transform duration-200 hover:-translate-y-1 ${
-        featured ? "lg:grid-cols-[1.2fr_1fr]" : ""
+        featured ? "lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]" : ""
       }`}
     >
       <div

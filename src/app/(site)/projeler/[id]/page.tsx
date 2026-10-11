@@ -60,7 +60,9 @@ export default async function ProjectPage({ params }: PageProps<"/projeler/[id]"
         )}
       </Reveal>
 
-      <div className={`mt-12 grid gap-10 ${photos.length ? "lg:grid-cols-[1fr_1.1fr]" : ""}`}>
+      <div
+        className={`mt-12 grid grid-cols-1 gap-10 ${photos.length ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]" : ""}`}
+      >
         {photos.length > 0 && (
           <Reveal>
             <Gallery photos={photos} alt={project.title} />

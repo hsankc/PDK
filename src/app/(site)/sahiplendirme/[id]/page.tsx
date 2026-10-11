@@ -55,7 +55,7 @@ export default async function AdoptionPage({ params }: PageProps<"/sahiplendirme
         <ArrowLeft className="size-4" aria-hidden="true" /> Tüm dostlarımız
       </Link>
 
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
         <Reveal>
           {photos.length > 0 ? (
             <Gallery photos={photos} alt={animal.name} />

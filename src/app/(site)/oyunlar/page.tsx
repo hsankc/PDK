@@ -41,7 +41,7 @@ export default async function GamesPage() {
             Mamaları ve suyu topla; çikolata, soğan, üzüm ve süt kediler için zararlı, onlardan kaç! Bilgisayarda ok
             tuşları ya da fare, telefonda parmağınla oyna.
           </p>
-          <div className="grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
+          <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
             <CatchGame />
             <Reveal>
               <Leaderboard game="mama" rows={mamaScores} />
@@ -56,7 +56,7 @@ export default async function GamesPage() {
           <p className="text-ink-soft mb-6 max-w-2xl">
             Kartlarda kampüsün yerlileri var. Eşlerini en az hamlede bul; berabere kalırsan kısa süren kazanır.
           </p>
-          <div className="grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
+          <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
             <div className="mx-auto w-full max-w-xl lg:max-w-none">
               <MemoryGame faces={faces} />
             </div>
